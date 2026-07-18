@@ -8,6 +8,8 @@
 
 [Website](https://baselane.sh?ref=gh) · [Docs](https://baselane.sh/docs/) · [harness.json spec](https://github.com/baselane-sh/harness.json) · [npm](https://www.npmjs.com/package/baselane)
 
+![baselane audit, apply, and drift in a terminal](.github/baselane-demo.gif)
+
 ## Why
 
 Every AI harness reads per-repo config — `CLAUDE.md`, `AGENTS.md`, `.github/copilot-instructions.md`, skills, hooks, agents — but there's no equivalent of `package.json` for it. No versioning, no single source of truth, no way for a team to say "this is how we work with AI" and roll it out. Configs drift: stale commands, contradictory conventions, copy-pasted sections nobody updates.
