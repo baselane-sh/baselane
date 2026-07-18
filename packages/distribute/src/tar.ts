@@ -1,6 +1,8 @@
 import { gunzipSync } from "node:zlib";
 
-const DEFAULT_MAX_BYTES = 50 * 1024 * 1024;
+// 200MB decompressed: real harness repos ship screenshots/demo assets (garrytan/gstack is ~57MB
+// decompressed) — the cap is a zip-bomb guard, not a content-size policy, so it errs roomy.
+const DEFAULT_MAX_BYTES = 200 * 1024 * 1024;
 
 function readOctal(buf: Buffer, offset: number, length: number): number {
   const raw = buf.toString("utf8", offset, offset + length).replace(/\0/g, "").trim();

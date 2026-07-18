@@ -14,6 +14,12 @@ const VERSION_TAG_RE = /^v?(\d+\.\d+\.\d+)$/;
 const ONE_LEVEL_SKILL_RE = /^skills\/([^/]+)\/SKILL\.md$/;
 const TWO_LEVEL_SKILL_RE = /^skills\/([^/]+)\/([^/]+)\/SKILL\.md$/;
 const AGENTS_SKILL_RE = /^\.agents\/skills\/([^/]+)\/SKILL\.md$/;
+// gstack layout: every non-dot top-level dir holding a SKILL.md is a skill (autoplan/SKILL.md,
+// careful/SKILL.md, ...). Dot dirs are excluded so .github/ etc. can never smuggle a skill in.
+const TOP_LEVEL_SKILL_RE = /^([^./][^/]*)\/SKILL\.md$/;
+// Claude plugin-marketplace layout (trailofbits/skills, anthropics/claude-code, expo/skills):
+// plugins/<plugin>/skills/<name>/SKILL.md.
+const PLUGIN_SKILL_RE = /^plugins\/([^/]+)\/skills\/([^/]+)\/SKILL\.md$/;
 const ROOT_SKILL_PATH = "SKILL.md";
 
 function stampVersion(ref: string, sha: string): string {
@@ -51,6 +57,8 @@ function findSkillMatches(paths: string[], repoName: string): SkillMatch[] {
       const oneLevel = ONE_LEVEL_SKILL_RE.exec(path);
       const twoLevel = !oneLevel ? TWO_LEVEL_SKILL_RE.exec(path) : null;
       const agentsLevel = !oneLevel && !twoLevel ? AGENTS_SKILL_RE.exec(path) : null;
+      const pluginLevel = !oneLevel && !twoLevel && !agentsLevel ? PLUGIN_SKILL_RE.exec(path) : null;
+      const topLevel = !oneLevel && !twoLevel && !agentsLevel && !pluginLevel ? TOP_LEVEL_SKILL_RE.exec(path) : null;
       if (oneLevel) {
         name = oneLevel[1];
         sourceDir = `skills/${oneLevel[1]}`;
@@ -60,6 +68,12 @@ function findSkillMatches(paths: string[], repoName: string): SkillMatch[] {
       } else if (agentsLevel) {
         name = agentsLevel[1];
         sourceDir = `.agents/skills/${agentsLevel[1]}`;
+      } else if (pluginLevel) {
+        name = pluginLevel[2];
+        sourceDir = `plugins/${pluginLevel[1]}/skills/${pluginLevel[2]}`;
+      } else if (topLevel) {
+        name = topLevel[1];
+        sourceDir = topLevel[1];
       }
     }
     if (name === null) continue;

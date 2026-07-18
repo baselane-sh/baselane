@@ -85,6 +85,46 @@ describe("packFromFileset", () => {
     expect((r.pack.skills ?? []).some((s) => s.name === "ignored")).toBe(true);
   });
 
+  it("derived: top-level <dir>/SKILL.md ingests (gstack layout — each root dir is a skill)", async () => {
+    const files = {
+      "AGENTS.md": "# repo\n",
+      "autoplan/SKILL.md": "---\nname: autoplan\ndescription: Plan a change automatically before implementing it\n---\n\nBody.\n",
+      "careful/SKILL.md": "---\nname: careful\ndescription: Slow careful mode for risky or destructive changes\n---\n\nBody.\n",
+      "autoplan/reference.md": "Extra autoplan reference.",
+    };
+    const r = await packFromFileset(files, OPTS);
+    expect(r.derived).toBe(true);
+    const names = (r.pack.skills ?? []).map((s) => s.name);
+    expect(names).toContain("autoplan");
+    expect(names).toContain("careful");
+    const autoplan = (r.pack.skills ?? []).find((s) => s.name === "autoplan");
+    expect((autoplan?.references ?? []).some((ref) => ref.body === "Extra autoplan reference.")).toBe(true);
+  });
+
+  it("derived: plugin-marketplace plugins/<plugin>/skills/<name>/SKILL.md ingests (trailofbits layout)", async () => {
+    const files = {
+      "AGENTS.md": "# repo\n",
+      "plugins/building-secure-contracts/skills/audit-prep/SKILL.md": "---\nname: audit-prep\ndescription: Prepare a codebase for a security audit engagement\n---\n\nBody.\n",
+      "plugins/building-secure-contracts/skills/audit-prep/checklist.md": "Audit checklist reference.",
+    };
+    const r = await packFromFileset(files, OPTS);
+    const audit = (r.pack.skills ?? []).find((s) => s.name === "audit-prep");
+    expect(audit).toBeDefined();
+    expect((audit?.references ?? []).some((ref) => ref.body === "Audit checklist reference.")).toBe(true);
+  });
+
+  it("derived: dot top-level dirs are not treated as skills (.github/SKILL.md ignored)", async () => {
+    const files = {
+      "AGENTS.md": "# repo\n",
+      ".github/SKILL.md": "---\nname: sneaky\ndescription: Should never be picked up as a skill from a dot dir\n---\n\nBody.\n",
+      "real/SKILL.md": "---\nname: real\ndescription: A genuine top-level-dir skill in the same repo\n---\n\nBody.\n",
+    };
+    const r = await packFromFileset(files, OPTS);
+    const names = (r.pack.skills ?? []).map((s) => s.name);
+    expect(names).toContain("real");
+    expect(names).not.toContain("sneaky");
+  });
+
   it("derived: shallow-shadows-deep — skills/foo/SKILL.md beats skills/cat/foo/SKILL.md", async () => {
     const files = {
       "AGENTS.md": "# repo\n",

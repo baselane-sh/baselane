@@ -271,7 +271,10 @@ function onboarding(v: unknown): OnboardingStep[] {
 
 export const SKILL_NAME_MAX = 64;
 export const SKILL_DESC_MAX = 1024;
-export const SKILL_BODY_MAX_LINES = 500;
+// Hard ceiling is a sanity bound, not an authoring target — real ecosystem skills routinely run
+// 1-2k lines (garrytan/gstack's spec/SKILL.md is ~2.4k), and ingest must not reject them. The
+// 400-line soft warning below is the authoring-quality nudge.
+export const SKILL_BODY_MAX_LINES = 5000;
 export const SKILL_BODY_WARN_LINES = 400;
 
 export interface SkillLint {
@@ -301,7 +304,7 @@ function skillDescription(obj: Record<string, unknown>, path: string): string {
   return v;
 }
 
-/** body: non-empty markdown, ≤500 lines (hard ceiling; the 400-line soft warning is a skillLint). */
+/** body: non-empty markdown, ≤5000 lines (hard ceiling; the 400-line soft warning is a skillLint). */
 function skillBody(obj: Record<string, unknown>, path: string): string {
   const v = str(obj, "body", `${path}.body`);
   if (v.split("\n").length > SKILL_BODY_MAX_LINES) {
@@ -355,7 +358,7 @@ export function validateSkill(raw: unknown): SkillBlock {
 export function skillLints(block: SkillBlock): SkillLint[] {
   const lints: SkillLint[] = [];
   if (block.body.split("\n").length >= SKILL_BODY_WARN_LINES) {
-    lints.push({ field: "body", message: `body is approaching the ${SKILL_BODY_MAX_LINES}-line limit; split into references` });
+    lints.push({ field: "body", message: `body is over ${SKILL_BODY_WARN_LINES} lines; consider splitting into references` });
   }
   if (block.name.includes("anthropic") || block.name.includes("claude")) {
     lints.push({ field: "name", message: 'name contains the reserved word "anthropic" or "claude" — confirm this is legitimate first-party content, not impersonation' });
