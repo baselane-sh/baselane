@@ -1,0 +1,102 @@
+{
+  "$schema": "https://baselane.sh/harness.schema.json",
+  "version": 1,
+  "registry": null,
+  "target": {
+    "kind": "repo",
+    "id": "baselane"
+  },
+  "packs": {
+    "software-engineer-harness": "1.5.0"
+  },
+  "capabilities": {},
+  "materialized": {
+    "vendored": [
+      {
+        "path": ".baselane/capabilities.json",
+        "sha256": "5c2a7f9605f838291e36bf155e5225b7f425d113078f6ab6dd7d475da34bd8f3"
+      },
+      {
+        "path": ".baselane/tasks/README.md",
+        "sha256": "caa4fc8424aac1ac8da740ceadee10c037357c8e1d32112912a849673976b808"
+      },
+      {
+        "path": ".claude/agents/architect.md",
+        "sha256": "327c2b4b10645f78d6d120a4fdc1329018b6b5dc10e6da77eff162c0b0cd8ede"
+      },
+      {
+        "path": ".claude/agents/checker.md",
+        "sha256": "d20b91eeb7626897481bca45046e2b2e20ac62bc5647a251047f3919f54e9c18"
+      },
+      {
+        "path": ".claude/agents/code-reviewer.md",
+        "sha256": "4eb1f98b499fdd773880e378307a7c61f05244aabc3c11ca48b8c2eb37d4f404"
+      },
+      {
+        "path": ".claude/agents/code-simplifier.md",
+        "sha256": "1fb986d90ed18933fd01f4b54177edc1f7b48b049463a72cf671e17b8cda7fe0"
+      },
+      {
+        "path": ".claude/agents/planner.md",
+        "sha256": "d0a6106952d8e18e4c13a2ec735fc1c5ea46d501605b28f0d2c299169bec3e0c"
+      },
+      {
+        "path": ".claude/agents/reviewer.md",
+        "sha256": "637b9aabc31e0f928ff5d1fa0fb236758a4f21c8ce760ba7a6b570b14047ec09"
+      },
+      {
+        "path": ".claude/commands/build-and-check.md",
+        "sha256": "aa58fb02356b2a317a7a4ace5e113ed887e128128e56952c30154e4002dcb6c0"
+      },
+      {
+        "path": ".claude/commands/plan-change.md",
+        "sha256": "342217df63dc1f466e0b191ecf7a70a61376ce4a0fc7d7a37069f957c718a85e"
+      },
+      {
+        "path": ".claude/commands/plan-work.md",
+        "sha256": "1b69b0e454cf967bdb846a3da79848d9bb33cb8d4b70490ef9c161ebd752f1ef"
+      },
+      {
+        "path": ".claude/commands/review-change.md",
+        "sha256": "8ca9465a59fd658708ef12c4022806e41f82c88605858bb9aeea3f3c3f18622d"
+      },
+      {
+        "path": ".claude/commands/tdd-task.md",
+        "sha256": "ae4b75d4cafebd05a6da71c8d3fd787424bd3f8f02b5b8573bb1361e4845ab5b"
+      },
+      {
+        "path": ".claude/settings.json",
+        "sha256": "b71a9e948cecb9d97eb2821ecccaaba6c37735721149a406347deda1ec0ca806"
+      },
+      {
+        "path": ".claude/skills/design-review/SKILL.md",
+        "sha256": "24532a0756c60d0ce28e831e272c8f94f6b1c5fe91a662811634b874d4f40a5d"
+      },
+      {
+        "path": ".claude/skills/design-system/SKILL.md",
+        "sha256": "33f8fa99b6434a3d822acbb3da0851485b4046501c5928d6a23e852b8191a42e"
+      }
+    ],
+    "managedRegions": [
+      {
+        "path": ".github/copilot-instructions.md",
+        "regions": []
+      },
+      {
+        "path": "AGENTS.md",
+        "regions": []
+      },
+      {
+        "path": "CLAUDE.md",
+        "regions": []
+      },
+      {
+        "path": "GEMINI.md",
+        "regions": []
+      }
+    ],
+    "derivedCommitted": [],
+    "resolutions": {},
+    "capabilities": {}
+  }
+}
