@@ -1,0 +1,37 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo \"If this edit touches a linter, formatter, or typecheck config (.eslintrc*, eslint.config.*, .prettierrc*, tsconfig*.json, biome.json): do not weaken rules to silence an error — fix the code instead (ecc-essentials).\""
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [ -f tsconfig.json ] && command -v npx >/dev/null 2>&1; then npx tsc --noEmit || echo \"typecheck failing — fix before proceeding (ecc-essentials)\"; fi"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo \"Before calling this done: are the tests green, and is nothing secret hardcoded or staged? (ecc-essentials)\""
+          }
+        ]
+      }
+    ]
+  }
+}
