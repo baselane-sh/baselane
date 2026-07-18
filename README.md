@@ -43,6 +43,15 @@ baselane publish @scope/name --source github:owner/repo --ref <tag>
 baselane draft-pack <dir> · baselane graph <dir> · baselane map <dir>
 ```
 
+## Guides
+
+Scenario walkthroughs, in the [docs](https://baselane.sh/docs/):
+
+- [Adopt baselane in a repo that already has CLAUDE.md](https://baselane.sh/docs/guide-existing-config.html) — managed regions, never-clobber merging, what happens to your hand-written config
+- [Roll out one harness config across a team](https://baselane.sh/docs/guide-team-rollout.html) — pin a pack, distribute by PR, onboard new repos and machines
+- [Check harness drift in CI](https://baselane.sh/docs/guide-ci-drift.html) — a one-line GitHub Actions gate on `baselane drift`
+- [Install skills straight from GitHub](https://baselane.sh/docs/guide-install-github.html) — vendor obra/superpowers or anthropics/skills at an exact SHA
+
 ## Design choices
 
 - **Zero runtime npm dependencies** across the whole monorepo — including the Anthropic API integration (raw `fetch`, no SDK).

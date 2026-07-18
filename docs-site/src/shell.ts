@@ -50,6 +50,10 @@ const NAV: NavSection[] = [
   {
     section: "Guides",
     entries: [
+      { label: "Adopt with an existing CLAUDE.md", href: "guide-existing-config.html" },
+      { label: "Roll out across a team", href: "guide-team-rollout.html" },
+      { label: "Check drift in CI", href: "guide-ci-drift.html" },
+      { label: "Install from GitHub", href: "guide-install-github.html" },
       { label: "Create and edit a pack", href: "editing-packs.html" },
       { label: "Publish a pack", href: "publishing.html" },
       { label: "Organizations", href: "organizations.html" },

@@ -17,6 +17,10 @@ import { page as aboutDriftPage } from "../docs-site/src/pages/about-drift.ts";
 import { page as aboutRegistryPage } from "../docs-site/src/pages/about-registry.ts";
 import { page as packsPage } from "../docs-site/src/pages/packs.ts";
 import { page as manifestPage } from "../docs-site/src/pages/manifest.ts";
+import { page as guideExistingConfigPage } from "../docs-site/src/pages/guide-existing-config.ts";
+import { page as guideTeamRolloutPage } from "../docs-site/src/pages/guide-team-rollout.ts";
+import { page as guideCiDriftPage } from "../docs-site/src/pages/guide-ci-drift.ts";
+import { page as guideInstallGithubPage } from "../docs-site/src/pages/guide-install-github.ts";
 import { page as editingPacksPage } from "../docs-site/src/pages/editing-packs.ts";
 import { page as publishingPage } from "../docs-site/src/pages/publishing.ts";
 import { page as organizationsPage } from "../docs-site/src/pages/organizations.ts";
@@ -34,6 +38,10 @@ const PAGES: DocsPage[] = [
   aboutRegistryPage,
   packsPage,
   manifestPage,
+  guideExistingConfigPage,
+  guideTeamRolloutPage,
+  guideCiDriftPage,
+  guideInstallGithubPage,
   editingPacksPage,
   publishingPage,
   organizationsPage,
