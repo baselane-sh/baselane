@@ -6,7 +6,7 @@
 [![CI](https://github.com/baselane-sh/baselane/actions/workflows/ci.yml/badge.svg)](https://github.com/baselane-sh/baselane/actions/workflows/ci.yml)
 [![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue)](LICENSE)
 
-[Website](https://baselane.sh?ref=gh) · [Docs](https://docs.baselane.sh) · [harness.json spec](https://github.com/baselane-sh/harness.json) · [npm](https://www.npmjs.com/package/baselane)
+[Website](https://baselane.sh?ref=gh) · [Docs](https://baselane.sh/docs/) · [harness.json spec](https://github.com/baselane-sh/harness.json) · [npm](https://www.npmjs.com/package/baselane)
 
 ## Why
 
@@ -60,7 +60,7 @@ This repo manages its own harness config with baselane — see [`harness` files]
 | `packages/analyze` | Repo static analysis (languages, frameworks, commands) |
 | `packages/materialize` | Disk-reconcile + install engine shared by CLI and agent |
 | `packages/distribute` | GitHub PR distribution + git-ref pack resolution |
-| `docs-site` | Source for [docs.baselane.sh](https://docs.baselane.sh) |
+| `docs-site` | Source for [baselane.sh/docs](https://baselane.sh/docs/) |
 
 ## Development
 
