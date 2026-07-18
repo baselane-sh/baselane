@@ -1,6 +1,6 @@
 {
   "name": "@baselane/materialize",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "type": "module",
   "description": "Disk-reconcile and install engine (plan/apply/receipt/settings-merge/manifest-io/resolve/install) shared by the baselane CLI and desktop agent.",
   "main": "./src/index.ts",
