@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if command -v gofmt >/dev/null 2>&1; then gofmt -l .; else echo \"gofmt not found — install the Go toolchain to check formatting (go-rules)\"; fi"
+          }
+        ]
+      }
+    ]
+  }
+}

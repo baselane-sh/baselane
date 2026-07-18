@@ -1,0 +1,91 @@
+/* docs-site/src/docs.css — page-specific styles for docs.baselane.sh, layered on top of the
+   landing's shared design system (styles.css). Only tokens already defined there are used here
+   (--bg/--text/--muted/--surface/--border/--hairline/--brand/--brand-3/--mono/--sans/--s*), so the
+   two sites stay visually identical wherever their layouts overlap. */
+
+/* The .hm-nav/.hm-links/.brand/.bmark header rules the landing uses live in landing/home.css
+   (scoped there because home.css is only loaded on the marketing homepage), not in the shared
+   styles.css this site loads. Reproduced here so the same header markup renders identically
+   without pulling in the rest of home.css. Uses --fill-1 (a shared token) in place of home.css's
+   page-local --hover custom property. */
+header.nav.hm-nav .nav-in{display:flex;align-items:center;gap:26px;height:62px;}
+header.nav.hm-nav .brand{display:inline-flex;align-items:center;gap:10px;font-weight:600;font-size:16px;letter-spacing:-.02em;color:var(--text);}
+header.nav.hm-nav .bmark{width:24px;height:24px;display:block;flex:none;border-radius:7px;}
+header.nav.hm-nav .hm-links{display:flex;align-items:center;gap:2px;margin-left:6px;}
+header.nav.hm-nav .hm-links a{color:var(--muted);font-size:14px;font-weight:500;padding:8px 12px;border-radius:8px;transition:color .15s,background .15s;}
+header.nav.hm-nav .hm-links a:hover,header.nav.hm-nav .hm-links a.active{color:var(--text);background:var(--fill-1);}
+header.nav.hm-nav .nav-right{margin-left:auto;display:flex;align-items:center;gap:10px;}
+@media(max-width:860px){header.nav.hm-nav .hm-links{display:none;}}
+
+/* small caret between the site nav links and the docs-page nav links in the header */
+.ds-sep{width:1px;height:16px;background:var(--hairline);display:inline-block;}
+@media(max-width:860px){.ds-sep{display:none;}}
+
+.ds-layout{display:flex;gap:var(--s48);padding-top:var(--s48);padding-bottom:var(--s96);align-items:flex-start;}
+@media(max-width:800px){.ds-layout{flex-direction:column;gap:var(--s24);padding-top:var(--s24);}}
+@media(max-width:480px){.ds-layout{padding-top:var(--s16);padding-bottom:var(--s48);}.ds-layout.wrap{padding-left:16px;padding-right:16px;}}
+
+.ds-side{flex:0 0 200px;position:sticky;top:84px;}
+@media(max-width:800px){.ds-side{position:static;flex:none;width:100%;border-bottom:1px solid var(--hairline);padding-bottom:var(--s16);max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;}}
+.ds-side ul{list-style:none;margin:0 0 var(--s16);padding:0;display:flex;flex-direction:column;gap:2px;}
+.ds-side ul:last-child{margin-bottom:0;}
+@media(max-width:800px){.ds-side ul{flex-direction:row;flex-wrap:wrap;gap:var(--s8);margin-bottom:var(--s8);}}
+.ds-side-label{margin:0 0 6px;padding:0 10px;font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--faint);}
+@media(max-width:800px){.ds-side-label{width:100%;margin:var(--s8) 0 2px;}}
+.ds-side a{display:block;padding:7px 10px;border-radius:8px;color:var(--muted);font-size:14px;border-left:2px solid transparent;transition:background .15s,color .15s,border-color .15s;}
+.ds-side a:hover{background:var(--fill-1);color:var(--text);text-decoration:none;}
+.ds-side a.active{background:color-mix(in srgb,var(--brand) 12%,transparent);border-left-color:var(--brand);color:var(--brand-3);font-weight:600;}
+@media(max-width:800px){.ds-side a{padding:9px 12px;min-height:40px;display:flex;align-items:center;}.ds-side a.active{border-left:none;border-bottom:2px solid var(--brand);border-radius:8px 8px 0 0;}}
+
+.ds-content{flex:1;min-width:0;max-width:72ch;}
+.ds-content h1{font-size:clamp(30px,4.4vw,46px);letter-spacing:-0.025em;line-height:1.08;margin:0 0 var(--s16);}
+.ds-content .lede{color:var(--muted);font-size:18px;line-height:1.6;margin:0 0 var(--s24);}
+.ds-content h2{font-size:clamp(20px,2.4vw,26px);letter-spacing:-0.01em;font-weight:600;margin:var(--s64) 0 var(--s16);padding-bottom:var(--s12);border-bottom:1px solid var(--hairline);}
+.ds-content h2:first-child{margin-top:0;}
+.ds-content h3{font-size:17px;font-weight:600;letter-spacing:-.005em;margin:var(--s32) 0 var(--s12);}
+.ds-content p{color:var(--muted);font-size:16px;line-height:1.65;margin:0 0 var(--s16);}
+.ds-content strong{color:var(--text);font-weight:600;}
+.ds-content ul,.ds-content ol{color:var(--muted);padding-left:var(--s24);margin:0 0 var(--s24);}
+.ds-content li{margin:var(--s8) 0;line-height:1.65;}
+.ds-content a{color:var(--brand-3);text-decoration:none;}
+.ds-content a:hover{text-decoration:underline;}
+@media(max-width:480px){.ds-content p,.ds-content li{font-size:15px;}.ds-content .lede{font-size:16px;}}
+
+code.inline{font-family:var(--mono);background:var(--surface);border:1px solid var(--border);border-radius:5px;padding:2px 6px;font-size:.88em;color:var(--text);overflow-wrap:anywhere;}
+.ds-content pre{position:relative;font-family:var(--mono);background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:var(--s16);overflow-x:auto;max-width:100%;-webkit-overflow-scrolling:touch;font-size:13.5px;line-height:1.6;color:var(--text);margin:0 0 var(--s16);box-shadow:inset 0 1px 0 rgba(255,255,255,.04);}
+.ds-content pre code{background:none;border:none;padding:0;font-size:inherit;white-space:pre;}
+
+.ds-content table{width:100%;border:1px solid var(--border);border-radius:12px;overflow:hidden;border-collapse:separate;border-spacing:0;margin:0 0 var(--s16);}
+.ds-content th,.ds-content td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--hairline);font-size:14px;vertical-align:top;}
+.ds-content th{font-family:var(--sans);font-size:12.5px;font-weight:500;color:var(--text);background:var(--surface-2);}
+.ds-content tr:last-child td{border-bottom:none;}
+/* wide tables scroll inside their own box instead of pushing the page wide; works whether or not
+   a page wraps its table in .ds-table-scroll — the table itself scrolls as a fallback. */
+.ds-content table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%;}
+.ds-table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%;margin:0 0 var(--s16);}
+.ds-table-scroll table{margin:0;}
+
+/* copy button injected by shell.ts's inline script into every .ds-content pre */
+.copy-btn{position:absolute;top:8px;right:8px;font-family:var(--sans);font-size:12px;line-height:1;padding:6px 10px;border-radius:6px;border:1px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer;opacity:0;transition:opacity .15s,color .15s,border-color .15s,background .15s;}
+.ds-content pre:hover .copy-btn,.copy-btn:focus-visible{opacity:1;}
+.copy-btn:hover{color:var(--brand-3);border-color:var(--edge);background:var(--surface-2);}
+.copy-btn.copied{opacity:1;color:var(--brand-3);border-color:var(--edge);}
+@media(hover:none){.copy-btn{opacity:1;}}
+
+.invalid,.valid{display:inline-block;font-size:13px;font-weight:500;padding:4px 10px;border-radius:6px;margin:0 0 var(--s16);}
+.invalid{color:#e5484d;background:rgba(229,72,77,.1);border:1px solid rgba(229,72,77,.3);}
+.valid{color:#3cb878;background:rgba(60,184,120,.1);border:1px solid rgba(60,184,120,.3);}
+
+/* "Next steps" block every page ends with — shell.ts's nextSteps() helper. */
+.ds-next{margin-top:var(--s64);padding-top:var(--s24);border-top:1px solid var(--hairline);}
+.ds-next h2{margin:0 0 var(--s16);font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);}
+.ds-next ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:var(--s12);}
+.ds-next li{margin:0;}
+.ds-next a{display:block;height:100%;padding:var(--s16);border:1px solid var(--border);border-radius:12px;background:var(--surface);color:var(--text);font-size:14px;font-weight:500;line-height:1.5;text-decoration:none;transition:transform .15s,border-color .15s,background .15s;}
+.ds-next a:hover{transform:translateY(-2px);border-color:var(--brand-3);background:var(--surface-2);text-decoration:none;}
+@media(max-width:640px){.ds-next ul{grid-template-columns:1fr;}}
+
+/* headers/footer are shared with the landing, but the mega-menu / lucide-driven mobile toggle
+   there depends on JS this site doesn't load; keep the mobile hamburger to a plain CSS class
+   toggle instead (see shell.ts's inline onclick). */
+.nav-toggle .lucide-x{display:none;}

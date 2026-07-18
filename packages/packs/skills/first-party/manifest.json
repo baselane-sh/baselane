@@ -1,0 +1,10 @@
+{
+  "skills": [
+    { "name": "ts-extension-imports", "category": "write" },
+    { "name": "immutable-updates", "category": "write" },
+    { "name": "append-only-jsonl-stores", "category": "write" },
+    { "name": "zero-dependency-discipline", "category": "review" },
+    { "name": "golden-snapshot-discipline", "category": "review" },
+    { "name": "validate-at-boundaries", "category": "review" }
+  ]
+}

@@ -1,0 +1,6 @@
+baselane pack library — third-party attributions
+=================================================
+Some packs adapt content from the following MIT-licensed project:
+  ECC — https://github.com/affaan-m/ECC — © 2026 Affaan Mustafa — MIT License
+Adapted, not copied verbatim. Each adapted pack also carries an `attribution`
+field surfaced in its generated AGENTS.md.

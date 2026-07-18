@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if command -v ruff >/dev/null 2>&1; then ruff check .; else echo \"ruff not found — pip install ruff to lint (python-rules)\"; fi"
+          }
+        ]
+      }
+    ]
+  }
+}

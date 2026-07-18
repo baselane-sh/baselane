@@ -1,0 +1,35 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo \"Reminder: failing test first; run the build, the suite, and the checker before marking this done.\""
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo \"Before finishing, append any steps completed this session to .baselane/tasks/progress.md with a commit reference, and check off finished tasks in PLAN.md.\""
+          }
+        ]
+      },
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo \"Before finishing, if you added/moved modules, changed commands, or shifted a convention, regenerate the system map (`baselane map .`) — see .baselane/system-map/README.md.\""
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "capabilities": [
+    {
+      "type": "tasks",
+      "store": "repo",
+      "method": "ledger"
+    }
+  ]
+}

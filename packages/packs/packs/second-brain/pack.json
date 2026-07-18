@@ -1,0 +1,36 @@
+{
+  "$schema": "https://baselane.dev/schema/workflow-pack-v1.json",
+  "id": "second-brain",
+  "version": "1.0.0",
+  "title": "Second Brain (OKF)",
+  "summary": "A durable second brain for every repo and laptop: an Open Knowledge Format (OKF) wiki for project knowledge — architecture, decisions, gotchas, runbooks — plus a memory store of durable one-line facts, maintained by a librarian subagent that ingests what the team learns and lints for contradictions. The discipline is read-before-acting and write-after-learning, and the AI keeps the bookkeeping, not you. Built on the Karpathy \"LLM Wiki\" ingest/query/lint loop and Google's Open Knowledge Format. It ships the format and the habit, not pre-filled content — the brain accumulates as the team works.",
+  "scope": "both",
+  "context": {
+    "markdown": "## Second brain (OKF wiki + memory)\n\nThis project keeps a durable second brain the AI reads before acting and writes after learning:\n\n- `.baselane/wiki/` — an Open Knowledge Format (OKF) knowledge base for project knowledge: architecture, decisions, gotchas, runbooks. One concept per file (with a `type` frontmatter field), plus an `index.md` and an append-only `log.md`.\n- `.baselane/memory/` — durable one-line facts (decisions, corrections, non-obvious constraints), indexed by `MEMORY.md`.\n\nRead `index.md` and `MEMORY.md` before acting — recall what's already known rather than re-deriving it. After learning something durable, ingest it (a wiki page or a memory fact) together with its index and log lines. Corrections beat additions: reconcile contradictions rather than letting them pile up. Use `/wiki` and `/remember` for one-step capture; the `librarian` subagent handles the bookkeeping and periodic lint.\n"
+  },
+  "capabilities": [
+    { "type": "wiki", "store": "repo", "method": "baselane" },
+    { "type": "wiki", "store": "org", "method": "baselane" },
+    { "type": "memory", "store": "repo", "method": "files" },
+    { "type": "memory", "store": "org", "method": "files" }
+  ],
+  "agents": [
+    {
+      "name": "librarian",
+      "description": "Knowledge-base keeper: ingests durable knowledge into the OKF wiki and memory, and lints them for contradictions, stale claims, orphan pages, and broken cross-links.",
+      "tools": ["Read", "Grep", "Glob", "Edit", "Write"],
+      "model": "sonnet",
+      "prompt": "You are the librarian for this project's second brain (`.baselane/wiki/` and `.baselane/memory/`). You have two jobs.\n\n(1) Ingest. When the session learned something durable — an architectural fact, a decision, a gotcha, a correction — record it. Project knowledge goes in the OKF wiki (`.baselane/wiki/`: one concept per file with a `type` frontmatter field, plus its `index.md` line and a `log.md` entry). A durable one-line fact goes in memory (`.baselane/memory/`, with its `MEMORY.md` line). Follow the protocol in each directory's README.\n\n(2) Lint. On request (or via `/wiki lint`), scan every wiki page and memory fact for contradictions between pages, stale claims, pages missing from the index, and broken cross-links. Reconcile contradictions rather than letting them coexist — corrections beat additions.\n\nAlways read `index.md` and `MEMORY.md` before acting. Never fabricate a page or a fact; only record what the work actually established. Keep the bookkeeping — the index and log lines — current; that is your job, not the human's."
+    }
+  ],
+  "commands": [],
+  "hooks": [
+    {
+      "event": "SessionStart",
+      "matcher": "",
+      "description": "At session start, recall the second brain before acting.",
+      "action": "print-reminder",
+      "message": "Recall the second brain before acting: read .baselane/wiki/index.md and .baselane/memory/MEMORY.md first — the answer may already be written down."
+    }
+  ]
+}

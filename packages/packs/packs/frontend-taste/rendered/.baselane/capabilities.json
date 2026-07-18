@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "capabilities": [
+    {
+      "type": "design",
+      "store": "repo",
+      "method": "author",
+      "config": {
+        "brandColor": "#4F46E5",
+        "radius": "8",
+        "theme": "both",
+        "mood": "distinctive, non-generic, considered"
+      }
+    }
+  ]
+}

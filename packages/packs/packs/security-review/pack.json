@@ -1,0 +1,72 @@
+{
+  "$schema": "https://baselane.dev/schema/workflow-pack-v1.json",
+  "id": "security-review",
+  "version": "2.0.0",
+  "title": "Security review",
+  "summary": "A 4-layer pre-deploy security audit (secrets, authentication, input validation, data access) with per-layer prompts and a scan toolkit, a reviewer role, a /security-scan diff check, a /security-audit pre-deploy pass, a pre-ship Stop-hook reminder, and baseline security rules for every endpoint — flags real vulnerabilities with severity and file:line, not theater.",
+  "scope": "repo",
+  "attribution": { "source": "affaan-m/ECC", "url": "https://github.com/affaan-m/ECC", "license": "MIT" },
+  "context": {
+    "markdown": "## Security review discipline\n\nRun this against any code that handles user input, authentication, API endpoints, or sensitive data — before it reaches production.\n\n### Security rules (apply to every endpoint, always)\n\n- Never hardcode secrets — read them from environment variables (or a secret manager) and fail fast at startup if a required one is missing.\n- Use parameterized queries — never build a query by concatenating a user value into a string.\n- Every endpoint verifies authentication and authorization server-side; the client hiding a button is not access control.\n- Every data query filters by the authenticated user's own id (or explicitly checks an admin role) — never trust a client-supplied id.\n- Validate all input server-side against a schema — client-side validation alone is not validation.\n- Return generic error messages to the client; log full detail server-side only.\n- Rate-limit authentication endpoints.\n- Enable row-level security (RLS) by default on any database that supports it.\n- Set secure cookie flags — `httpOnly`, `secure`, `sameSite` — on every session cookie.\n\n### Checklist\n\n- **Injection** — Validate every external or untrusted input at the boundary before it reaches business logic; fail fast with a clear message. Are queries parameterized? Is user input ever concatenated into a query, shell command, or template string?\n- **Authorization** — Is every route/mutation checked for auth, not just authentication? Is access scoped to the resource owner, not just \"logged in\"?\n- **Secrets** — Never hardcode secrets — read them from environment variables and fail fast at startup if a required one is missing. Any hardcoded API key, password, token, or connection string in source?\n- **Unsafe deserialization** — Is untrusted input ever passed to `eval`, a pickle/deserialize call, or a dynamic `require`/`import` without validation?\n- **SSRF** — Does the server ever fetch a URL supplied by the user? If so, is the destination allow-listed, not just \"looks like a URL\"?\n- **XSS** — Is user content ever rendered as raw HTML (`innerHTML`, `dangerouslySetInnerHTML`) without sanitization?\n- **Logging** — Do logs ever include a password, token, or full PII record?\n\n### Severity\n\nHardcoded secrets, injection, and auth bypass are CRITICAL — block merge. XSS and SSRF without an allow-list are HIGH. Missing rate limiting or verbose error messages are MEDIUM.\n\n### False positives to skip\n\n`.env.example` placeholders, clearly-marked test credentials, and public API keys meant to be public are not findings — verify context before flagging.\n"
+  },
+  "skills": [
+    {
+      "name": "security-audit",
+      "description": "Run the 4-layer pre-deploy security pass (secrets, authentication, input validation, data access) before shipping code that touches user input, auth, an endpoint, or a database query.",
+      "category": "review",
+      "body": "# Security audit: the 4-layer pre-deploy pass\n\nRun this before shipping any change that touches user input, authentication, an API endpoint, or a database query. It exists because most vibe-coded security incidents come from three repeat failure modes: a committed API key (in git history or a client bundle), an endpoint the server never actually checks auth on (the client just hides the button — `GET /api/invoices/43` returns someone else's invoice), and a hand-built SQL string. All three are caught by asking specific questions in order, not by \"looking for bugs\" in general.\n\nWork through all four layers. Each has an audit prompt — answer it against the actual code, not in the abstract.\n\n## Layer 1 — Secrets\n\n**Audit prompt:** Scan the current diff and git history for hardcoded API keys, passwords, tokens, or connection strings. Is every secret read from an environment variable (or a secret manager), never a literal in source? Does startup fail fast with a clear error if a required secret is missing?\n\n**Run:** `gitleaks detect` (finds secrets already in git history) and, if a match turns up, `trufflehog` to verify the secret is still active before treating it as a false positive.\n\n## Layer 2 — Authentication\n\n**Audit prompt:** For every route and mutation, does the *server* check authentication and authorization — not just the client hiding a button? For every resource-scoped endpoint, is access scoped to the resource's owner, not just \"any logged-in user\" (the BOLA/IDOR check — `GET /api/invoices/43` must 403/404 for anyone but the invoice's owner or an explicit admin)?\n\n## Layer 3 — Input validation\n\n**Audit prompt:** Is every external or untrusted input validated server-side against a schema before it reaches business logic — not only in the client? Are queries parameterized (never a user value concatenated into SQL, a shell command, or a template string)? Do file uploads have a size limit, and do auth endpoints have rate limiting?\n\n## Layer 4 — Data access\n\n**Audit prompt:** Does every data query filter by the authenticated user's own id (or explicitly check an admin role for cross-user access), instead of trusting a client-supplied id? Do error responses returned to the client stay generic (no stack trace, no internal detail) while the full context is logged server-side? Where the schema supports it, is deletion a soft delete rather than an irreversible hard delete?\n\n## Toolkit\n\nRun what's installed; note what isn't so a human can decide whether to install it.\n\n| Tool | Layer | What it checks |\n| --- | --- | --- |\n| `gitleaks detect` | 1 | secrets already committed to git history |\n| `trufflehog` | 1 | verifies a found secret is still live before you page anyone |\n| `npm audit` / `pip-audit` | 3 | known-vulnerable dependencies |\n| `semgrep --config auto` | 3–4 | static analysis for injection, unsafe patterns |\n| GitHub Secret Scanning + Push Protection | 1 | blocks a secret from ever reaching the remote |\n\n## Severity\n\nHardcoded secrets, injection, and an auth bypass are CRITICAL — block the release. A BOLA/IDOR gap or an un-rate-limited auth endpoint is HIGH. A verbose error message or a missing rate limit is MEDIUM. Report every finding with file:line, not a vague \"looks risky.\"\n"
+    },
+    {
+      "name": "validate-at-boundaries",
+      "description": "Use when code receives data from outside its own module — user input, API responses, file contents, env vars, message payloads — validate it against a schema at the boundary and fail fast, so untrusted shapes never propagate inward.",
+      "body": "# Validate at boundaries\n\nEvery place external data enters your system is a boundary: an HTTP handler, a file read, an API\nresponse, an environment variable, a queue message. **Validate at the boundary, before the data\nreaches any logic that assumes it is well-formed.** Inside the boundary, the value is trusted because\nyou already checked it — not because you hope it is right.\n\n```ts\n// At the boundary: parse into a known shape, or reject.\nconst parsed = OrderSchema.parse(await req.json()); // throws on bad shape\ncreateOrder(parsed);                                 // inner code trusts `parsed`\n```\n\n## Rules\n\n- **One validator is the authority for each shape.** Route every entry point for that shape through\n  it — built-in, user-supplied, or machine-generated. Never hand-construct or trust an unvalidated\n  object further in.\n- **Fail fast, name the field.** Reject the whole input on the first violation with a message that\n  says which field was wrong and why. A vague \"invalid input\" costs the caller a debugging session.\n- **Parse, don't just check.** Return a typed value from validation so downstream code carries the\n  guarantee in its types, not just in a comment.\n- **Never trust \"internal\" data blindly.** An API response or a sibling service's payload is external\n  to your module even if it's inside your company — validate it the same way.\n\n## Why\n\nUnvalidated data that flows inward turns a boundary problem into a deep-stack mystery: the crash\nhappens three layers down, far from the malformed input that caused it. Validation at the edge keeps\nthe failure where the bad data actually entered, where the error message can still be specific.\n\n## Boundaries to cover\n\nHTTP request bodies and query params · file and config contents · third-party API responses ·\nenvironment variables (validate presence and format at startup) · deserialized messages/events ·\nanything read from a store you did not just write in the same transaction.\n",
+      "category": "review"
+    }
+  ],
+  "agents": [
+    {
+      "name": "security-reviewer",
+      "description": "Flags real vulnerabilities (injection, authz gaps, secrets, unsafe deserialization, SSRF, XSS) with severity and file:line. Use after writing code that touches user input, auth, or sensitive data, and before any release.",
+      "tools": ["Read", "Grep", "Glob", "Bash"],
+      "model": "sonnet",
+      "prompt": "You are a security reviewer. Read the changed code and check it against the security-review checklist in context: injection, authorization, hardcoded secrets, unsafe deserialization, SSRF, XSS, and sensitive-data logging. For each finding, cite the exact file:line, name the concrete input and outcome that makes it exploitable, and give severity (CRITICAL/HIGH/MEDIUM). Skip findings you cannot point to in the code — do not manufacture issues to look thorough. If nothing is exploitable, say so and approve."
+    }
+  ],
+  "commands": [
+    {
+      "name": "security-scan",
+      "description": "Run the security-reviewer over the current changes and report findings by severity.",
+      "argument_hint": "[optional: path or diff ref]",
+      "prompt": "Invoke the security-reviewer subagent over the current diff (or $ARGUMENTS if given). Report findings grouped by severity (CRITICAL, HIGH, MEDIUM) with file:line and fix for each. End with a verdict: approve, or block until CRITICAL/HIGH issues are fixed."
+    },
+    {
+      "name": "security-audit",
+      "description": "Run the security-audit skill's 4-layer pre-deploy pass (secrets, authentication, input validation, data access) and report findings by layer and severity.",
+      "argument_hint": "[optional: path or diff ref]",
+      "prompt": "Run the security-audit skill's 4-layer pass over the current diff (or $ARGUMENTS if given): secrets, authentication, input validation, data access. For each layer, run the relevant toolkit command when it's installed (gitleaks, trufflehog, npm audit / pip-audit, semgrep --config auto) and answer that layer's audit prompt against the actual code. Report findings grouped by layer with file:line and severity (CRITICAL/HIGH/MEDIUM). End with a verdict: safe to ship, or block until CRITICAL/HIGH issues are fixed."
+    }
+  ],
+  "hooks": [
+    {
+      "event": "PostToolUse",
+      "matcher": "Edit|Write",
+      "description": "Remind to check untrusted input at trust boundaries whenever code is edited.",
+      "action": "print-reminder",
+      "message": "Security check: any user input, external fetch, or deserialized data crossing a trust boundary here? Validate it before it's used."
+    },
+    {
+      "event": "PostToolUse",
+      "matcher": "Edit|Write",
+      "description": "After an edit, scan the working tree for committed secrets with gitleaks when it is installed.",
+      "action": "run-command",
+      "command": "if command -v gitleaks >/dev/null 2>&1; then gitleaks detect --no-git --no-banner --redact; else echo \"gitleaks not found — install gitleaks to scan for secrets (security-review)\"; fi"
+    },
+    {
+      "event": "Stop",
+      "matcher": "",
+      "description": "Before ending the session, run the pre-deploy security toolkit and remind to run /security-audit before shipping.",
+      "action": "run-command",
+      "command": "if command -v gitleaks >/dev/null 2>&1; then gitleaks detect --no-git --no-banner --redact; else echo \"gitleaks not found — install to scan for committed secrets (security-audit layer 1)\"; fi; if command -v semgrep >/dev/null 2>&1; then semgrep --config auto --quiet; else echo \"semgrep not found — install for static analysis (security-audit layers 3-4)\"; fi; echo \"Pre-ship reminder: run /security-audit for the full 4-layer review (secrets, auth, input validation, data access) before deploying.\""
+    }
+  ]
+}

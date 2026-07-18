@@ -1,0 +1,1 @@
+{ "name": "npm-ws-root", "private": true, "workspaces": ["packages/*"] }

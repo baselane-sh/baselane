@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "capabilities": [
+    {
+      "type": "wiki",
+      "store": "repo",
+      "method": "baselane"
+    },
+    {
+      "type": "wiki",
+      "store": "org",
+      "method": "baselane"
+    },
+    {
+      "type": "memory",
+      "store": "repo",
+      "method": "files"
+    },
+    {
+      "type": "memory",
+      "store": "org",
+      "method": "files"
+    }
+  ]
+}

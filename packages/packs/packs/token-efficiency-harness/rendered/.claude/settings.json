@@ -1,0 +1,26 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Task",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo \"Tier your subagents: search/mechanical work runs on haiku or sonnet — reserve the top model for the main loop.\""
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo \"Before finishing, capture any durable decisions or facts from this session to .baselane/memory/ (use /remember) and update its MEMORY.md index.\""
+          }
+        ]
+      }
+    ]
+  }
+}

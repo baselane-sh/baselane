@@ -1,0 +1,185 @@
+{
+  "generatedAt": "2026-07-12T01:51:52.693Z",
+  "sources": [
+    {
+      "repo": "obra/superpowers",
+      "sha": "d884ae04edebef577e82ff7c4e143debd0bbec99",
+      "license": "MIT"
+    },
+    {
+      "repo": "anthropics/skills",
+      "sha": "9d2f1ae187231d8199c64b5b762e1bdf2244733d",
+      "license": "Apache-2.0"
+    }
+  ],
+  "skills": [
+    {
+      "name": "algorithmic-art",
+      "source": "anthropics/skills",
+      "url": "https://github.com/anthropics/skills/tree/9d2f1ae187231d8199c64b5b762e1bdf2244733d/skills/algorithmic-art",
+      "license": "Apache-2.0",
+      "category": "write"
+    },
+    {
+      "name": "brainstorming",
+      "source": "obra/superpowers",
+      "url": "https://github.com/obra/superpowers/tree/d884ae04edebef577e82ff7c4e143debd0bbec99/skills/brainstorming",
+      "license": "MIT",
+      "category": "plan"
+    },
+    {
+      "name": "brand-guidelines",
+      "source": "anthropics/skills",
+      "url": "https://github.com/anthropics/skills/tree/9d2f1ae187231d8199c64b5b762e1bdf2244733d/skills/brand-guidelines",
+      "license": "Apache-2.0",
+      "category": "review"
+    },
+    {
+      "name": "canvas-design",
+      "source": "anthropics/skills",
+      "url": "https://github.com/anthropics/skills/tree/9d2f1ae187231d8199c64b5b762e1bdf2244733d/skills/canvas-design",
+      "license": "Apache-2.0",
+      "category": "write"
+    },
+    {
+      "name": "dispatching-parallel-agents",
+      "source": "obra/superpowers",
+      "url": "https://github.com/obra/superpowers/tree/d884ae04edebef577e82ff7c4e143debd0bbec99/skills/dispatching-parallel-agents",
+      "license": "MIT",
+      "category": "ship"
+    },
+    {
+      "name": "executing-plans",
+      "source": "obra/superpowers",
+      "url": "https://github.com/obra/superpowers/tree/d884ae04edebef577e82ff7c4e143debd0bbec99/skills/executing-plans",
+      "license": "MIT",
+      "category": "ship"
+    },
+    {
+      "name": "finishing-a-development-branch",
+      "source": "obra/superpowers",
+      "url": "https://github.com/obra/superpowers/tree/d884ae04edebef577e82ff7c4e143debd0bbec99/skills/finishing-a-development-branch",
+      "license": "MIT",
+      "category": "ship"
+    },
+    {
+      "name": "frontend-design",
+      "source": "anthropics/skills",
+      "url": "https://github.com/anthropics/skills/tree/9d2f1ae187231d8199c64b5b762e1bdf2244733d/skills/frontend-design",
+      "license": "Apache-2.0",
+      "category": "write"
+    },
+    {
+      "name": "internal-comms",
+      "source": "anthropics/skills",
+      "url": "https://github.com/anthropics/skills/tree/9d2f1ae187231d8199c64b5b762e1bdf2244733d/skills/internal-comms",
+      "license": "Apache-2.0",
+      "category": "ship"
+    },
+    {
+      "name": "mcp-builder",
+      "source": "anthropics/skills",
+      "url": "https://github.com/anthropics/skills/tree/9d2f1ae187231d8199c64b5b762e1bdf2244733d/skills/mcp-builder",
+      "license": "Apache-2.0",
+      "category": "write"
+    },
+    {
+      "name": "receiving-code-review",
+      "source": "obra/superpowers",
+      "url": "https://github.com/obra/superpowers/tree/d884ae04edebef577e82ff7c4e143debd0bbec99/skills/receiving-code-review",
+      "license": "MIT",
+      "category": "review"
+    },
+    {
+      "name": "requesting-code-review",
+      "source": "obra/superpowers",
+      "url": "https://github.com/obra/superpowers/tree/d884ae04edebef577e82ff7c4e143debd0bbec99/skills/requesting-code-review",
+      "license": "MIT",
+      "category": "review"
+    },
+    {
+      "name": "skill-creator",
+      "source": "anthropics/skills",
+      "url": "https://github.com/anthropics/skills/tree/9d2f1ae187231d8199c64b5b762e1bdf2244733d/skills/skill-creator",
+      "license": "Apache-2.0",
+      "category": "review"
+    },
+    {
+      "name": "slack-gif-creator",
+      "source": "anthropics/skills",
+      "url": "https://github.com/anthropics/skills/tree/9d2f1ae187231d8199c64b5b762e1bdf2244733d/skills/slack-gif-creator",
+      "license": "Apache-2.0",
+      "category": "write"
+    },
+    {
+      "name": "subagent-driven-development",
+      "source": "obra/superpowers",
+      "url": "https://github.com/obra/superpowers/tree/d884ae04edebef577e82ff7c4e143debd0bbec99/skills/subagent-driven-development",
+      "license": "MIT",
+      "category": "ship"
+    },
+    {
+      "name": "systematic-debugging",
+      "source": "obra/superpowers",
+      "url": "https://github.com/obra/superpowers/tree/d884ae04edebef577e82ff7c4e143debd0bbec99/skills/systematic-debugging",
+      "license": "MIT",
+      "category": "debug"
+    },
+    {
+      "name": "test-driven-development",
+      "source": "obra/superpowers",
+      "url": "https://github.com/obra/superpowers/tree/d884ae04edebef577e82ff7c4e143debd0bbec99/skills/test-driven-development",
+      "license": "MIT",
+      "category": "debug"
+    },
+    {
+      "name": "theme-factory",
+      "source": "anthropics/skills",
+      "url": "https://github.com/anthropics/skills/tree/9d2f1ae187231d8199c64b5b762e1bdf2244733d/skills/theme-factory",
+      "license": "Apache-2.0",
+      "category": "review"
+    },
+    {
+      "name": "using-git-worktrees",
+      "source": "obra/superpowers",
+      "url": "https://github.com/obra/superpowers/tree/d884ae04edebef577e82ff7c4e143debd0bbec99/skills/using-git-worktrees",
+      "license": "MIT",
+      "category": "ship"
+    },
+    {
+      "name": "using-superpowers",
+      "source": "obra/superpowers",
+      "url": "https://github.com/obra/superpowers/tree/d884ae04edebef577e82ff7c4e143debd0bbec99/skills/using-superpowers",
+      "license": "MIT",
+      "category": "plan"
+    },
+    {
+      "name": "verification-before-completion",
+      "source": "obra/superpowers",
+      "url": "https://github.com/obra/superpowers/tree/d884ae04edebef577e82ff7c4e143debd0bbec99/skills/verification-before-completion",
+      "license": "MIT",
+      "category": "review"
+    },
+    {
+      "name": "web-artifacts-builder",
+      "source": "anthropics/skills",
+      "url": "https://github.com/anthropics/skills/tree/9d2f1ae187231d8199c64b5b762e1bdf2244733d/skills/web-artifacts-builder",
+      "license": "Apache-2.0",
+      "category": "write"
+    },
+    {
+      "name": "webapp-testing",
+      "source": "anthropics/skills",
+      "url": "https://github.com/anthropics/skills/tree/9d2f1ae187231d8199c64b5b762e1bdf2244733d/skills/webapp-testing",
+      "license": "Apache-2.0",
+      "category": "debug"
+    },
+    {
+      "name": "writing-plans",
+      "source": "obra/superpowers",
+      "url": "https://github.com/obra/superpowers/tree/d884ae04edebef577e82ff7c4e143debd0bbec99/skills/writing-plans",
+      "license": "MIT",
+      "category": "plan"
+    }
+  ]
+}

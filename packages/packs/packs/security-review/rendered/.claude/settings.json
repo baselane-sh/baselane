@@ -1,0 +1,35 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo \"Security check: any user input, external fetch, or deserialized data crossing a trust boundary here? Validate it before it's used.\""
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if command -v gitleaks >/dev/null 2>&1; then gitleaks detect --no-git --no-banner --redact; else echo \"gitleaks not found — install gitleaks to scan for secrets (security-review)\"; fi"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if command -v gitleaks >/dev/null 2>&1; then gitleaks detect --no-git --no-banner --redact; else echo \"gitleaks not found — install to scan for committed secrets (security-audit layer 1)\"; fi; if command -v semgrep >/dev/null 2>&1; then semgrep --config auto --quiet; else echo \"semgrep not found — install for static analysis (security-audit layers 3-4)\"; fi; echo \"Pre-ship reminder: run /security-audit for the full 4-layer review (secrets, auth, input validation, data access) before deploying.\""
+          }
+        ]
+      }
+    ]
+  }
+}

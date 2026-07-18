@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo \"Taste check: one accent color, one corner-radius system, one theme mode — per page.\""
+          }
+        ]
+      }
+    ]
+  }
+}

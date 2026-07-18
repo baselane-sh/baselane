@@ -1,0 +1,26 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if command -v sqlfluff >/dev/null 2>&1; then sqlfluff lint --disable-progress-bar .; else echo \"sqlfluff not found — pip install sqlfluff to lint SQL/migrations (database-review)\"; fi"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo \"Before finishing, if you added/moved modules, changed commands, or shifted a convention, regenerate the system map (`baselane map .`) — see .baselane/system-map/README.md.\""
+          }
+        ]
+      }
+    ]
+  }
+}

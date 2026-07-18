@@ -1,0 +1,44 @@
+{
+  "$schema": "https://baselane.dev/schema/workflow-pack-v1.json",
+  "id": "database-review",
+  "version": "1.2.0",
+  "title": "Database review",
+  "summary": "Query, schema, and migration review judgment a linter can't encode — index every foreign key, kill N+1s, keep queries parameterized, ship migrations that don't lock production — with a reviewer and a sqlfluff guard.",
+  "scope": "repo",
+  "attribution": { "source": "affaan-m/ECC", "url": "https://github.com/affaan-m/ECC", "license": "MIT" },
+  "context": {
+    "markdown": "## Database review discipline\n\n`sqlfluff` catches SQL style and obvious mistakes — this pack is the judgment it can't encode, applied in review of any query, schema, or migration before it reaches production.\n\n### Query performance\n\n- Every column in a `WHERE` or `JOIN` should be indexed — confirm with `EXPLAIN ANALYZE`, don't assume.\n- Watch for N+1: a query inside a loop over rows from a previous query. Batch or join it.\n- Composite indexes put equality columns before range columns.\n\n### Schema design\n\n- Use precise types: timestamp-with-timezone for times, decimal/numeric for money, `text` over an arbitrary varchar cap.\n- Every foreign key gets an index — no exceptions.\n- Put constraints (`NOT NULL`, `CHECK`, `ON DELETE`) in the schema, not only in application code.\n\n### Migration safety\n\n- Adding a `NOT NULL` column to a large table needs a backfill, not just a default — check in-flight writes during the migration.\n- Don't hold locks across an external call or a slow backfill; batch the backfill.\n- Every migration has a rollback path.\n\n### Data-layer security\n\n- Queries are parameterized, never string-concatenated with user input.\n- Multi-tenant tables enforce row-level access at the database, not only in application code.\n- Application database users get least-privilege grants, never blanket admin.\n\n### Flag in review\n\n- `SELECT *` in application code shipped to production.\n- Offset pagination on large, frequently-written tables — prefer cursor pagination.\n- `INSERT`s in a loop instead of a batch/multi-row insert.\n- Inconsistent lock ordering across transactions touching the same tables (deadlock risk).\n"
+  },
+  "agents": [
+    {
+      "name": "database-reviewer",
+      "description": "Reviews SQL, schema changes, and migrations for missing indexes, N+1 queries, unsafe migrations, and injection risk. Use when writing queries, schemas, or migrations, or troubleshooting database performance.",
+      "tools": ["Read", "Grep", "Glob", "Bash"],
+      "model": "sonnet",
+      "prompt": "You are a database reviewer. Before reviewing, consult ARCHITECTURE.md's structure and conventions (the baselane-managed system map) so your review matches this repo's real layout and hidden rules; if ARCHITECTURE.md does not exist yet, suggest running /map regenerate (or baselane map . from the repo root) to generate it, and proceed with the review while noting that gap. Then read the changed SQL, schema, or migration files and check them against the database-review discipline in context: indexing on WHERE/JOIN/foreign-key columns, N+1 patterns, precise types and constraints, migration backfill/rollback safety, parameterized queries, and least-privilege access. Cite exact file:line for each finding, name the concrete failure mode (e.g. \"this JOIN on orders.user_id has no index — table scan at N rows\"), and give severity. If the change is sound, say so."
+    }
+  ],
+  "commands": [
+    {
+      "name": "db-review",
+      "description": "Run the database-reviewer over the current query, schema, or migration changes.",
+      "argument_hint": "[optional: path or diff ref]",
+      "prompt": "Invoke the database-reviewer subagent over the current diff (or $ARGUMENTS if given). Report findings grouped by area (indexing, schema, migration safety, security) with file:line and fix for each. End with a clear verdict."
+    }
+  ],
+  "hooks": [
+    {
+      "event": "PostToolUse",
+      "matcher": "Edit|Write",
+      "description": "After an edit, lint SQL and migrations with sqlfluff when it is installed.",
+      "action": "run-command",
+      "command": "if command -v sqlfluff >/dev/null 2>&1; then sqlfluff lint --disable-progress-bar .; else echo \"sqlfluff not found — pip install sqlfluff to lint SQL/migrations (database-review)\"; fi"
+    }
+  ],
+  "onboarding": [
+    { "id": "generate-system-map", "title": "Generate the system map", "description": "Analyze the repository's import graph into ARCHITECTURE.md.", "command": "baselane map ." }
+  ],
+  "capabilities": [
+    { "type": "system-map", "store": "repo", "method": "analyze" }
+  ]
+}

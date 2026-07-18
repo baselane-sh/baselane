@@ -1,0 +1,11 @@
+export { sha256 } from "./hash.ts";
+export { planReconcile } from "./plan.ts";
+export { applyPlan, loadManifest, readCurrent, writeManifest, MANIFEST_NAME } from "./fs-ops.ts";
+export { hasManagedHooks, mergeBaselaneHooks, SettingsParseError } from "./settings-merge.ts";
+export type { Bundle, BundleOnboardingStep, Manifest, ReconcilePlan } from "./types.ts";
+export { targetLocation, readManifestFile, readManifestWithFallback, writeManifestFile } from "./manifest-io.ts";
+export type { TargetLocation } from "./manifest-io.ts";
+export { resolveManifestPacks, fetchRegistryVersions, registryBaseFor, encodeSkillPin, decodeSkillPin, DEFAULT_REGISTRY } from "./resolve-packs.ts";
+export type { ResolvedManifestPacks, RegistryVersionEntry } from "./resolve-packs.ts";
+export { runInstall, installFromManifest } from "./install.ts";
+export type { InstallOptions, InstallReport } from "./install.ts";

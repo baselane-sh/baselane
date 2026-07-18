@@ -1,0 +1,35 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo \"Recall the second brain before acting: read .baselane/wiki/index.md and .baselane/memory/MEMORY.md first — the answer may already be written down.\""
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo \"Before finishing, capture any durable decisions or facts from this session to .baselane/memory/ (use /remember) and update its MEMORY.md index.\""
+          }
+        ]
+      },
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo \"Before finishing, if you changed how something works, update the wiki entry (and its index.md/log.md lines) — see .baselane/wiki/README.md.\""
+          }
+        ]
+      }
+    ]
+  }
+}

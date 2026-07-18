@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo \"Root cause before fix: is this change addressing the cause you proved, or patching a symptom?\""
+          }
+        ]
+      }
+    ]
+  }
+}

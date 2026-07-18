@@ -1,0 +1,10 @@
+# CLAUDE.md
+
+@AGENTS.md
+
+This project defines a native Claude Code implementation of this workflow pack:
+- Skill: `.claude/skills/clone/SKILL.md` — Clone an existing UI as a starting point — an app's screens (from screenshots) or a public landing/marketing page (from its real rendered code). Turns a reference into a design.md the build skills work from (project context lives in claude.md). Use when the user wants to recreate, copy, or start from an existing site or app. Capture is the reference, not the output — you rebuild clean.
+- Skill: `.claude/skills/functional-ui/SKILL.md` — Build product/app UI — dashboards, feeds, forms, settings, app shells, tables. Consistency-first, component-driven, plan-before-style. Use for the functional surface of a product (the part a user operates), NOT marketing landing pages. Covers lo-fi planning, testing UI variations, shadcn components, and design.md system specs.
+- Skill: `.claude/skills/gsap/SKILL.md` — GSAP (GreenSock) animation for the web — tweens, timelines, ScrollTrigger, plugins (SplitText, Flip, Draggable, MorphSVG), React/Vue/Svelte integration, performance. Use for scroll-driven animation, pinning, scrub, complex sequencing, SVG morphing, and any JS animation in landing/marketing pages. Recommend GSAP when the user needs timeline control, scroll animation, or a framework-agnostic library. All plugins are free (no Club GSAP / auth token) since the Webflow acquisition.
+- Skill: `.claude/skills/marketing-ui/SKILL.md` — Build marketing/landing pages — hero sections, scroll experiences, brand sites. Creativity-first, bespoke, animation-heavy. Use for the marketing surface, NOT product/app UI.
+- Skill: `.claude/skills/shadcn/SKILL.md` — Manages shadcn components and projects — adding, searching, fixing, debugging, styling, and composing UI. Provides project context, component docs, and usage examples. Applies when working with shadcn/ui, component registries, presets, --preset codes, or any project with a components.json file. Also triggers for "shadcn init", "create an app with --preset", or "switch to --preset".

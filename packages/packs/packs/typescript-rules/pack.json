@@ -1,0 +1,46 @@
+{
+  "$schema": "https://baselane.dev/schema/workflow-pack-v1.json",
+  "id": "typescript-rules",
+  "version": "1.4.0",
+  "title": "TypeScript rules",
+  "summary": "TypeScript conventions a linter can't check — explicit public-API types, unknown over any with narrowing, immutable updates, Zod at the boundary — with a reviewer and a prettier guard; formatting and lint rules belong in CI.",
+  "scope": "repo",
+  "attribution": { "source": "affaan-m/ECC", "url": "https://github.com/affaan-m/ECC", "license": "MIT" },
+  "context": {
+    "markdown": "## TypeScript/JavaScript conventions (beyond what the linter enforces)\n\n`eslint` and `prettier` already enforce formatting, `no-explicit-any`, and stray `console.log` — this pack is the judgment they can't encode. Keep the mechanical checks in CI (`prettier --check .`, `eslint .`); the reviewer covers the rest.\n\n### Types at the surface\n\n- Give exported functions, shared utilities, and public methods explicit parameter and return types; let inference handle obvious locals.\n- Use `interface` for object shapes meant to be extended; use `type` for unions, intersections, and mapped types. Prefer string-literal unions over `enum` unless interop demands one.\n- Use `unknown` for external/untrusted input and narrow it before use (`error instanceof Error`); reserve `any` for genuine escape hatches, never as the default.\n- Type React props with a named `interface`/`type` and type callback props explicitly; skip `React.FC` unless you need it.\n\n### Immutability\n\n- Return new objects/arrays via spread (`{ ...user, name }`) or `map`/`filter` — never `push`/`splice`/assignment on a value you received.\n\n### Errors and boundaries\n\n- Handle errors explicitly with context, then re-raise or return a typed error; narrow an `unknown` caught error before reading `.message`.\n- Validate external input at the boundary with a schema (e.g. Zod) and infer the type from the schema rather than hand-writing both.\n- Read required secrets from the environment and fail fast at startup if one is missing.\n\n### Flag in review (a linter won't)\n\n- An exported function with no parameter/return types.\n- `any` where `unknown` plus a type guard would do.\n- In-place mutation of a function argument.\n- A repeated inline object shape that should be a named type.\n"
+  },
+  "skills": [
+    {
+      "name": "immutable-updates",
+      "description": "Use when updating objects, arrays, or records in application code — return a new copy with the change applied instead of mutating the original in place, to prevent hidden side effects and aliasing bugs.",
+      "body": "# Immutable updates\n\nWhen you change a value, **produce a new copy — never mutate the argument you were handed.** Shared\nreferences mean an in-place mutation is a spooky-action-at-a-distance bug: some other holder of the\nsame object sees a change it never asked for.\n\n```ts\n// WRONG — mutates the caller's object\nfunction rename(user, name) {\n  user.name = name;\n  return user;\n}\n\n// CORRECT — returns a new object, original untouched\nfunction rename(user, name) {\n  return { ...user, name };\n}\n```\n\n## Patterns\n\n- **Object field:** `{ ...obj, field: value }`.\n- **Nested field:** spread each level you touch — `{ ...obj, addr: { ...obj.addr, city } }`.\n- **Array append/remove:** `[...list, item]`, `list.filter(x => x.id !== id)`,\n  `list.map(x => x.id === id ? { ...x, done: true } : x)` — not `push`/`splice`/index assignment.\n- **Record update:** `{ ...map, [key]: value }` and `const { [key]: _drop, ...rest } = map` to remove.\n\n## Why it pays off\n\n- **No hidden side effects.** A function that returns a new value can't corrupt state its caller\n  still depends on. Behavior is a function of inputs, not of call order.\n- **Debugging is local.** When a value is wrong, the mutation that produced it is the expression\n  that built it — not some distant `.sort()` or field write on a shared reference.\n- **Safe concurrency and change-detection.** Referential equality (`prev !== next`) becomes a\n  reliable \"did this change?\" signal for caches, memoization, and UI diffing.\n\n## When in-place is acceptable\n\nA locally-scoped object that never escapes the function — a builder/accumulator you allocated and\nreturn once — is fine to mutate. The rule protects values that are *shared*: arguments, fields on\nlong-lived state, anything another holder still references.\n",
+      "category": "write"
+    }
+  ],
+  "agents": [
+    {
+      "name": "typescript-reviewer",
+      "description": "Reviews changed TypeScript/JavaScript against the standards: explicit public-API types, unknown over any, immutable updates, Zod boundaries, and env-var secrets. Reports file:line + severity. Use after any TS/JS change.",
+      "tools": ["Read", "Grep", "Glob", "Bash"],
+      "model": "sonnet",
+      "prompt": "You are a TypeScript reviewer. Read the changed TS/JS files and check them against the conventions in context: explicit types on exported/public APIs, `unknown` over `any` with narrowing, immutable updates via spread/array methods, typed error handling, boundary validation with a schema library, and env-var secrets that fail fast. Formatting and lint rules are the linter/CI's job — don't re-litigate them. Cite the exact file:line for each finding, name the concrete failure mode, and give severity. If the change is sound, say so plainly rather than inventing findings."
+    }
+  ],
+  "commands": [
+    {
+      "name": "typescript-review",
+      "description": "Run the TypeScript reviewer over the current change against this pack's TypeScript standards.",
+      "argument_hint": "[base ref]",
+      "prompt": "Invoke the typescript-reviewer subagent on the changed TypeScript files (the diff since $ARGUMENTS, or the working tree if no ref is given). It checks this pack's conventions — explicit public-API types, unknown over any with narrowing, immutable updates, and Zod at the boundary — and reports file:line + severity. Formatting and lint rules are CI's job; don't re-litigate them. Fix any Critical or Important findings before merging."
+    }
+  ],
+  "hooks": [
+    {
+      "event": "PostToolUse",
+      "matcher": "Edit|Write",
+      "description": "After an edit, check formatting with prettier when it is installed.",
+      "action": "run-command",
+      "command": "if command -v prettier >/dev/null 2>&1; then prettier --check .; else echo \"prettier not found — install prettier to check formatting (typescript-rules)\"; fi"
+    }
+  ]
+}

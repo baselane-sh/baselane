@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "capabilities": [
+    {
+      "type": "memory",
+      "store": "repo",
+      "method": "files"
+    }
+  ]
+}

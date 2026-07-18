@@ -1,0 +1,63 @@
+{
+  "$schema": "https://baselane.dev/schema/workflow-pack-v1.json",
+  "id": "disciplined-workflow",
+  "version": "1.1.0",
+  "title": "Disciplined workflow",
+  "summary": "The plan-first pipeline with hard approval gates: a written design signed off before any code, a path-exact task plan, then task-by-task spec-then-quality review — for teams that need explicit sign-off at each stage. Pick the software-engineer harness instead for the same loop without gates.",
+  "scope": "both",
+  "attribution": { "source": "obra/superpowers", "url": "https://github.com/obra/superpowers", "license": "MIT" },
+  "context": {
+    "markdown": "## Disciplined workflow\n\n- Plan before you build: for any change beyond a one-sentence diff, produce a short written design and get it approved before writing implementation code.\n- Decompose the approved design into small, independently verifiable tasks — each with exact file paths and a verification step.\n- Evidence before claims: never report work done without the verification output (the command you ran and its result) to back it.\n- Isolate feature work in a git worktree or branch — never directly on the main line.\n"
+  },
+  "agents": [
+    {
+      "name": "plan-reviewer",
+      "description": "Checks a plan for placeholders, undefined references, and coverage gaps before execution starts.",
+      "tools": ["Read", "Grep", "Glob"],
+      "model": "sonnet",
+      "prompt": "You are a plan reviewer. Read the plan and the design it derives from. Flag every placeholder (TBD/TODO/\"handle edge cases\"), every reference to a file, type, or function that no task defines, and every design requirement no task covers — citing the exact location in the plan for each. Approve only when the plan is executable with zero placeholders and full design coverage."
+    },
+    {
+      "name": "task-reviewer",
+      "description": "Reviews one completed task in two ordered verdicts: spec compliance first, then code quality.",
+      "tools": ["Read", "Grep", "Glob", "Bash"],
+      "model": "sonnet",
+      "prompt": "You are a task reviewer returning two ordered verdicts. Part 1 — Spec compliance: does the change do exactly what the task specified, nothing missing and nothing extra? Part 2 — Code quality: error handling, edge cases, test realism, naming. Cite file:line for every finding, categorize each Critical/Important/Minor, and give both verdicts explicitly. Do not pass a task while any Critical or Important finding is open."
+    }
+  ],
+  "commands": [
+    {
+      "name": "brainstorm",
+      "description": "Interview toward an approved written design before any implementation.",
+      "argument_hint": "[what to build]",
+      "prompt": "Interview the requester about $ARGUMENTS to surface intent, constraints, and edge cases, then write a short design doc and get explicit approval. Do not write or invoke any implementation until the design is approved."
+    },
+    {
+      "name": "write-plan",
+      "description": "Decompose an approved design into verifiable, path-exact tasks.",
+      "argument_hint": "[design doc or feature]",
+      "prompt": "Turn the approved design for $ARGUMENTS into a task-by-task plan: each task names the exact files to create or modify, the failing test to write first, and how it will be verified. No task may contain a placeholder or a reference to anything no task defines. Then invoke the plan-reviewer subagent and fix anything it flags before execution."
+    },
+    {
+      "name": "execute-plan",
+      "description": "Run the plan task-by-task with per-task spec-then-quality review.",
+      "argument_hint": "[plan file]",
+      "prompt": "Execute the plan in $ARGUMENTS one task at a time. After each task, invoke the task-reviewer subagent for its two ordered verdicts — spec compliance, then code quality — and do not advance while any Critical or Important finding is open."
+    }
+  ],
+  "hooks": [
+    {
+      "event": "Stop",
+      "matcher": "",
+      "description": "Reminds that a claim of done must carry its verification output.",
+      "action": "print-reminder",
+      "message": "Before reporting done, show the verification output — the command you ran and its result. Evidence before claims."
+    }
+  ],
+  "onboarding": [
+    { "id": "init-task-ledger", "title": "Initialize the task ledger", "description": "Create the task ledger for planning and progress tracking.", "command": "baselane tasks init" }
+  ],
+  "capabilities": [
+    { "type": "tasks", "store": "repo", "method": "ledger" }
+  ]
+}

@@ -1,0 +1,4 @@
+{
+  "name": "ts-app",
+  "scripts": { "build": "tsc", "test": "vitest run", "lint": "eslint ." }
+}

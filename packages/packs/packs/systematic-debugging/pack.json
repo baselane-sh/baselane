@@ -1,0 +1,44 @@
+{
+  "$schema": "https://baselane.dev/schema/workflow-pack-v1.json",
+  "id": "systematic-debugging",
+  "version": "1.1.0",
+  "title": "Systematic debugging",
+  "summary": "Root cause before fix: a four-phase debugging discipline governed by the Iron Law, escalating to an architectural review after three failed attempts instead of a fourth guess. The same discipline also ships as the \"systematic-debugging\" seed skill in the skills library — adopting both is redundant, not complementary; pick this pack for the enforcing subagent/hooks or the skill for zero-setup guidance.",
+  "scope": "both",
+  "attribution": { "source": "obra/superpowers", "url": "https://github.com/obra/superpowers", "license": "MIT" },
+  "context": {
+    "markdown": "## Systematic debugging\n\n- The Iron Law: NO FIXES WITHOUT ROOT CAUSE INVESTIGATION FIRST. If you have not found the root cause, you may not propose a fix.\n- Work the four phases in order: (1) root-cause investigation, (2) pattern analysis, (3) hypothesis and testing, (4) implementation.\n- After three failed fix attempts, STOP — the architecture is suspect. Do not attempt a fourth fix without an explicit architectural discussion.\n"
+  },
+  "agents": [
+    {
+      "name": "debugger",
+      "description": "Phase-disciplined investigator that reports an evidence chain from symptom to cause, not a guess.",
+      "tools": ["Read", "Grep", "Glob", "Bash"],
+      "model": "sonnet",
+      "prompt": "You are a systematic debugger. Obey the Iron Law: do not propose a fix until you have found the root cause. Reproduce the failure first, then work the four phases in order — root-cause investigation, pattern analysis, hypothesis and testing, implementation. Report the evidence chain from symptom to cause with file:line references, and never present a hypothesis as a conclusion. If three fixes have already failed, stop and recommend an architectural review instead of attempting a fourth."
+    }
+  ],
+  "commands": [
+    {
+      "name": "debug",
+      "description": "Walk a bug through the four phases; refuse to patch before the root cause is found.",
+      "argument_hint": "[symptom]",
+      "prompt": "Investigate $ARGUMENTS through the four phases in order — root-cause investigation, pattern analysis, hypothesis and testing, then implementation. Do not propose or apply a fix until the root cause is identified with evidence. If three fixes have already failed, stop and raise the architecture for discussion instead of trying a fourth."
+    },
+    {
+      "name": "root-cause",
+      "description": "Trace a symptom back to its origin before any change.",
+      "argument_hint": "[symptom or failing test]",
+      "prompt": "Trace $ARGUMENTS backwards from the observed symptom to its origin: reproduce it, follow the data and control flow to the first point where reality diverges from intent, and state the root cause with the evidence chain that proves it — before proposing any change."
+    }
+  ],
+  "hooks": [
+    {
+      "event": "PostToolUse",
+      "matcher": "Edit|Write",
+      "description": "After an edit, nudge the root-cause-before-fix discipline.",
+      "action": "print-reminder",
+      "message": "Root cause before fix: is this change addressing the cause you proved, or patching a symptom?"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+export type { Bundle, Manifest, ReconcilePlan } from "@baselane/materialize";
+export type { SyncResult } from "./sync.ts";
+export { validateBundle } from "./validate-bundle.ts";
+export { planReconcile } from "@baselane/materialize";
+export { sync } from "./sync.ts";
+export { main } from "./cli.ts";
+export { fetchBundle } from "./remote.ts";
+export { awaitApproval, pollPairing, startPairing } from "./pair.ts";
+export type { AgentConfig } from "./config.ts";
+export { defaultConfigPath, readConfig, writeConfig } from "./config.ts";
+export { mergeBaselaneHooks } from "@baselane/materialize";

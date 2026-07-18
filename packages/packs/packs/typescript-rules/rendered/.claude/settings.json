@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if command -v prettier >/dev/null 2>&1; then prettier --check .; else echo \"prettier not found — install prettier to check formatting (typescript-rules)\"; fi"
+          }
+        ]
+      }
+    ]
+  }
+}

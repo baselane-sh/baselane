@@ -1,0 +1,61 @@
+{
+  "name": "baselane",
+  "version": "0.1.1",
+  "type": "module",
+  "description": "Git-native package manager for AI coding harnesses \u2014 audit a repo, apply workflow packs, and keep agent config in sync.",
+  "main": "./src/index.ts",
+  "bin": {
+    "baselane": "./bin/baselane.mjs"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/baselane-sh/baselane.git",
+    "directory": "apps/cli"
+  },
+  "homepage": "https://github.com/baselane-sh/baselane",
+  "keywords": [
+    "ai",
+    "agents",
+    "skills",
+    "claude",
+    "harness",
+    "package-manager",
+    "cli",
+    "workflow",
+    "agent-config"
+  ],
+  "files": [
+    "bin/",
+    "dist/",
+    "README.md"
+  ],
+  "publishConfig": {
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "cli": "node --experimental-transform-types --no-warnings src/bin.ts",
+    "build": "tsc -p tsconfig.build.json",
+    "prepack": "pnpm run build"
+  },
+  "dependencies": {
+    "@baselane/analyze": "workspace:*",
+    "@baselane/distribute": "workspace:*",
+    "@baselane/materialize": "workspace:*",
+    "@baselane/packs": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^5.9.0",
+    "vitest": "^2.0.0"
+  },
+  "bugs": {
+    "url": "https://github.com/baselane-sh/baselane/issues"
+  }
+}

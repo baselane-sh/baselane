@@ -1,0 +1,43 @@
+{
+  "$schema": "https://baselane.dev/schema/workflow-pack-v1.json",
+  "id": "frontend-taste",
+  "version": "1.2.0",
+  "title": "Frontend taste",
+  "summary": "Ends the per-component style debate with fixed, non-configurable defaults: three hard locks per page, disciplined heroes, and a banned-AI-slop checklist enforced before merge.",
+  "scope": "repo",
+  "context": {
+    "markdown": "## Frontend taste discipline\n\nAdopt these as fixed defaults, not options to tune per project — their whole value is removing the per-page style debate, the way a formatter removes the whitespace debate. Brand color and corner radius are the only inputs; everything below is settled.\n\n### The three locks\n\nDecide these once per page and hold them for the whole page — mixing them is the single biggest tell of unreviewed AI output:\n\n1. **One accent color.** Pick a single accent for interactive/emphasis elements. Everything else is neutrals.\n2. **One corner-radius system.** Pick a radius scale (e.g. sm/md/lg mapped to fixed px values) and use it everywhere — no ad-hoc `rounded-[7px]` next to `rounded-2xl`.\n3. **One theme mode, decided at the page level.** Don't let individual components guess light/dark independently.\n\n### Hero discipline\n\n- Headline is 2 lines or fewer. If it doesn't fit, the message is too long, not the font too small.\n- Subtext is roughly 20 words or fewer — one sentence, not a paragraph.\n- Nav height is capped (~64px); it should never compete with the hero for vertical space.\n\n### Anti-slop bans\n\nThese patterns are default outputs of ungrounded AI generation. Treat every one as a defect, not a style choice:\n\n- No three-equal-width feature card rows. Use asymmetric layouts — different widths, different emphasis — so the page doesn't read as a template.\n- No AI-purple/mesh-blob gradients unless the brand explicitly calls for them.\n- No section-number eyebrows like \"001 · Features\" — they signal filler, not information.\n- No `window.addEventListener('scroll')` for reveal/parallax effects — use `IntersectionObserver`, it's cheaper and doesn't jank.\n- No emoji as section markers or bullet icons.\n- Neutrals get a deliberate hue bias (warm or cool grey); never pure mid-grey (`#808080`-style), which reads as unstyled.\n\n### Type\n\n- Pair a display face and a body face deliberately — don't ship the framework default pairing unreviewed.\n- Set a type scale (a small fixed set of sizes) and hold it; don't invent one-off sizes per component.\n\n### Both themes\n\nDesign light and dark as two considered modes, not one inverted into the other — check contrast and accent legibility in both.\n"
+  },
+  "agents": [
+    {
+      "name": "taste-reviewer",
+      "description": "Reviews a built UI against the three locks and anti-slop bans, reporting concrete violations with file:line. Use after building or changing any landing/marketing UI, before calling it done.",
+      "tools": ["Read", "Grep", "Glob"],
+      "model": "sonnet",
+      "prompt": "You are a frontend taste reviewer. If a `DESIGN.md` is present, treat it as the source of truth and check the UI against its tokens too. Read the changed UI files and check them against the three locks (one accent color, one corner-radius system, one theme mode per page) and the anti-slop bans (equal-width card rows, AI-purple/mesh-blob gradients, section-number eyebrows, scroll-event listeners instead of IntersectionObserver, emoji section markers, pure mid-grey neutrals) and hero discipline (headline length, subtext length, nav height). Report each violation with an exact file:line and a one-line concrete fix — do not report a violation you cannot point to in the code. If nothing violates the rules, say so plainly; do not invent findings to justify the review."
+    }
+  ],
+  "commands": [
+    {
+      "name": "design-review",
+      "description": "Run the taste-reviewer over the current changes and summarize violations and fixes.",
+      "argument_hint": "[optional: path or component name]",
+      "prompt": "Invoke the taste-reviewer subagent over the current diff (or $ARGUMENTS if given). Present its findings grouped by rule (locks, hero discipline, anti-slop bans), each with file:line and fix. If it finds nothing, report a clean pass."
+    }
+  ],
+  "hooks": [
+    {
+      "event": "PostToolUse",
+      "matcher": "Edit|Write",
+      "description": "Nudge the three locks whenever UI files are touched.",
+      "action": "print-reminder",
+      "message": "Taste check: one accent color, one corner-radius system, one theme mode — per page."
+    }
+  ],
+  "onboarding": [
+    { "id": "generate-design", "title": "Generate the design system doc", "description": "Capture the repository's design system into DESIGN.md.", "command": "baselane design ." }
+  ],
+  "capabilities": [
+    { "type": "design", "store": "repo", "method": "author", "config": { "brandColor": "#4F46E5", "radius": "8", "theme": "both", "mood": "distinctive, non-generic, considered" } }
+  ]
+}

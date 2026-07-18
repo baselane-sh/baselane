@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "capabilities": [
+    {
+      "type": "system-map",
+      "store": "repo",
+      "method": "analyze"
+    }
+  ]
+}
