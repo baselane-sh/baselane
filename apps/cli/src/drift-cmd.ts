@@ -30,7 +30,7 @@ async function readOrClassify(abs: string, rel: string, unreadable: string[]): P
 export async function runDrift(opts: { global: boolean; dir?: string; homeDir?: string }): Promise<DriftReport> {
   const loc = targetLocation({ global: opts.global, dir: opts.dir, homeDir: opts.homeDir });
   const { manifest } = await readManifestWithFallback(loc);
-  if (manifest === null) throw new Error(`drift: no harness.json at ${loc.manifestPath} — run baselane install first`);
+  if (manifest === null) throw new Error(`drift: no harness.json at ${loc.manifestPath} — run baselane apply or install first`);
 
   const unreadable: string[] = [];
   const vendored: DriftReport["vendored"] = [];

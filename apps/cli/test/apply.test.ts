@@ -168,3 +168,81 @@ describe("assertInsideDir", () => {
     expect(() => assertInsideDir("/tmp/t", "/etc/passwd")).toThrow(/escapes target dir/);
   });
 });
+
+describe("apply writes harness.json (customer-reported: apply then drift dead-ended)", () => {
+  async function readManifest() {
+    return JSON.parse(await readFile(join(dir, "harness.json"), "utf8"));
+  }
+
+  it("writes a manifest pinning the pack, with hashed vendored receipts and a region receipt per entry file", async () => {
+    await applyPack(dir, "software-engineer-harness", { force: false, dryRun: false });
+    const m = await readManifest();
+    expect(Object.keys(m.packs)).toEqual(["software-engineer-harness"]);
+    const settings = m.materialized.vendored.find((v: { path: string }) => v.path === ".claude/settings.json");
+    expect(settings.sha256).toMatch(/^[0-9a-f]{64}$/);
+    const agents = m.materialized.managedRegions.find((e: { path: string }) => e.path === "AGENTS.md");
+    expect(agents.regions).toHaveLength(1);
+    expect(agents.regions[0].packId).toBe("software-engineer-harness");
+    expect(agents.regions[0].sha256).toMatch(/^[0-9a-f]{64}$/);
+  });
+
+  it("drift runs clean immediately after apply", async () => {
+    const { runDrift } = await import("../src/drift-cmd.ts");
+    await applyPack(dir, "software-engineer-harness", { force: false, dryRun: false });
+    const report = await runDrift({ global: false, dir });
+    expect(report.clean).toBe(true);
+    expect(report.vendored.length).toBeGreaterThan(0);
+    expect(report.regions.length).toBeGreaterThan(0);
+    expect(report.vendored.every((v) => v.status === "ok")).toBe(true);
+  });
+
+  it("does not write a manifest on dry-run", async () => {
+    await applyPack(dir, "software-engineer-harness", { force: false, dryRun: true });
+    await expect(readFile(join(dir, "harness.json"), "utf8")).rejects.toThrow();
+  });
+
+  it("leaves skipped pre-existing files out of the receipt so drift stays clean", async () => {
+    await mkdir(join(dir, ".claude"), { recursive: true });
+    await writeFile(join(dir, ".claude", "settings.json"), "{}", "utf8");
+    await applyPack(dir, "software-engineer-harness", { force: false, dryRun: false });
+    const m = await readManifest();
+    expect(m.materialized.vendored.some((v: { path: string }) => v.path === ".claude/settings.json")).toBe(false);
+    const { runDrift } = await import("../src/drift-cmd.ts");
+    expect((await runDrift({ global: false, dir })).clean).toBe(true);
+  });
+
+  it("merges into an existing manifest: keeps other packs' pins, vendored entries, and region receipts", async () => {
+    const prior = {
+      version: 1,
+      registry: "https://registry.example",
+      target: { kind: "repo", id: "t" },
+      packs: { "other-pack": "2.0.0" },
+      capabilities: {},
+      materialized: {
+        vendored: [{ path: "skills/other.md", sha256: "a".repeat(64) }],
+        managedRegions: [{ path: "AGENTS.md", regions: [{ packId: "other-pack", version: "2.0.0", sha256: "b".repeat(64) }] }],
+        derivedCommitted: [],
+        resolutions: {},
+        capabilities: {},
+      },
+    };
+    await writeFile(join(dir, "harness.json"), JSON.stringify(prior, null, 2), "utf8");
+    await applyResolvedPack(dir, customPack, { force: false, dryRun: false });
+    const m = await readManifest();
+    expect(m.packs).toEqual({ "other-pack": "2.0.0", "acme-custom": "1.0.0" });
+    expect(m.registry).toBe("https://registry.example");
+    expect(m.materialized.vendored.some((v: { path: string }) => v.path === "skills/other.md")).toBe(true);
+    const agents = m.materialized.managedRegions.find((e: { path: string }) => e.path === "AGENTS.md");
+    const packIds = agents.regions.map((r: { packId: string }) => r.packId).sort();
+    expect(packIds).toEqual(["acme-custom", "other-pack"]);
+  });
+
+  it("re-applying the same pack twice leaves a single pin and single region receipt", async () => {
+    await applyResolvedPack(dir, customPack, { force: false, dryRun: false });
+    await applyResolvedPack(dir, customPack, { force: true, dryRun: false });
+    const m = await readManifest();
+    expect(m.packs).toEqual({ "acme-custom": "1.0.0" });
+    const agents = m.materialized.managedRegions.find((e: { path: string }) => e.path === "AGENTS.md");
+    expect(agents.regions).toHaveLength(1);
+  });
+});

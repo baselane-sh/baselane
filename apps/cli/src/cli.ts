@@ -89,7 +89,8 @@ export async function main(argv: string[], deps: CliDeps = {}): Promise<number> 
       });
       const label = argv.includes("--dry-run") ? "would write" : "wrote";
       console.log(`baselane apply ${pack.id}: ${label} ${r.written.length} file(s)` +
-        (r.skipped.length ? `, skipped ${r.skipped.length} existing (use --force): ${r.skipped.join(", ")}` : ""));
+        (r.skipped.length ? `, skipped ${r.skipped.length} existing (use --force): ${r.skipped.join(", ")}` : "") +
+        (argv.includes("--dry-run") ? "" : " · harness.json updated — run \"baselane drift\" anytime"));
       return 0;
     }
     if (cmd === "graph" && dir) {

@@ -1,6 +1,10 @@
 import { lstat, mkdir, readFile, stat, writeFile } from "node:fs/promises";
 import { dirname, join, resolve, sep } from "node:path";
-import { isEntryFile, loadBuiltinPack, mergeManagedRegion, renderPack, type WorkflowPack } from "@baselane/packs";
+import {
+  buildManifest, extractManagedRegions, isEntryFile, loadBuiltinPack, mergeManagedRegion,
+  renderPack, sha256Hex, type WorkflowPack,
+} from "@baselane/packs";
+import { readManifestWithFallback, targetLocation, writeManifestFile } from "@baselane/materialize";
 
 export interface ApplyOptions {
   force: boolean;
@@ -112,7 +116,63 @@ export async function applyResolvedPack(
       await writeFile(abs, content, "utf8");
     }
   }
+  if (!opts.dryRun) {
+    await recordApplyManifest(targetDir, pack, files, written);
+  }
   return { written: written.sort(), skipped: skipped.sort() };
+}
+
+/** Writes/updates the target's harness.json after an apply, so `baselane drift` works on the
+ * apply path exactly as it does after `baselane install`. Merges into any existing manifest
+ * (other packs' pins and receipts survive). Files apply SKIPPED (pre-existing, no --force) are
+ * deliberately left out of the receipt: apply didn't write them, so drift shouldn't police them. */
+async function recordApplyManifest(
+  targetDir: string,
+  pack: WorkflowPack,
+  files: Record<string, string>,
+  written: string[],
+): Promise<void> {
+  const loc = targetLocation({ global: false, dir: targetDir });
+  const { manifest: existing } = await readManifestWithFallback(loc);
+  const writtenSet = new Set(written);
+
+  const vendored = new Map((existing?.materialized.vendored ?? []).map((v) => [v.path, v]));
+  const managed = new Map((existing?.materialized.managedRegions ?? []).map((m) => [m.path, m]));
+
+  for (const [rel, content] of Object.entries(files)) {
+    if (isEntryFile(rel)) {
+      // The region merge runs on every apply, so after apply the region is on disk whether or
+      // not this run changed it. Its body derives only from the rendered content, so hash the
+      // null-merge instead of re-reading disk.
+      const region = extractManagedRegions(mergeManagedRegion(null, content, pack.id, pack.version))
+        .find((r) => r.packId === pack.id);
+      if (!region) continue;
+      const others = (managed.get(rel)?.regions ?? []).filter((r) => r.packId !== pack.id);
+      managed.set(rel, {
+        path: rel,
+        regions: [...others, { packId: pack.id, version: pack.version, sha256: sha256Hex(region.body) }],
+      });
+      continue;
+    }
+    if (!writtenSet.has(rel)) continue;
+    vendored.set(rel, { path: rel, sha256: sha256Hex(content) });
+  }
+
+  const byPath = <T extends { path: string }>(a: T, b: T) => a.path.localeCompare(b.path);
+  const manifest = buildManifest({
+    target: loc.target,
+    packs: { ...(existing?.packs ?? {}), [pack.id]: pack.version },
+    registry: existing?.registry ?? null,
+    capabilities: existing?.capabilities ?? {},
+    receipt: {
+      vendored: [...vendored.values()].sort(byPath),
+      managedRegions: [...managed.values()].sort(byPath),
+      derivedCommitted: existing?.materialized.derivedCommitted ?? [],
+      resolutions: existing?.materialized.resolutions ?? {},
+      capabilities: existing?.materialized.capabilities ?? {},
+    },
+  });
+  await writeManifestFile(loc.manifestPath, manifest);
 }
 
 /** Built-in-pack convenience wrapper over applyResolvedPack — kept so existing callers that
