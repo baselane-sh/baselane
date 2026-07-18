@@ -125,3 +125,46 @@ it("map --llm without a key exits 1 with guidance and never calls fetch", async 
     if (prevAnthropicApi !== undefined) process.env.ANTHROPIC_API_KEY = prevAnthropicApi;
   }
 });
+
+describe("runMap manifest receipts (issue #1)", () => {
+  async function seedManifest(): Promise<void> {
+    // A minimal apply creates the manifest map should merge into.
+    const { applyPack } = await import("../src/apply.ts");
+    await applyPack(dir, "software-engineer-harness", { force: false, dryRun: false });
+  }
+
+  it("records ARCHITECTURE.md's region in harness.json so drift verifies it", async () => {
+    await seedManifest();
+    await runMap(dir);
+    const manifest = JSON.parse(await readFile(join(dir, "harness.json"), "utf8"));
+    const arch = manifest.materialized.managedRegions.find((m: { path: string }) => m.path === "ARCHITECTURE.md");
+    expect(arch).toBeDefined();
+    expect(arch.regions[0].packId).toBe("system-map");
+    expect(arch.regions[0].sha256).toMatch(/^[0-9a-f]{64}$/);
+
+    const { runDrift } = await import("../src/drift-cmd.ts");
+    const clean = await runDrift({ global: false, dir });
+    expect(clean.clean).toBe(true);
+
+    // Hand-editing inside the region must now surface as drift.
+    const md = await readFile(join(dir, "ARCHITECTURE.md"), "utf8");
+    await writeFile(join(dir, "ARCHITECTURE.md"), md.replace("## Conventions", "## Tampered"));
+    const dirty = await runDrift({ global: false, dir });
+    expect(dirty.clean).toBe(false);
+    expect(dirty.regions.some((r) => r.path === "ARCHITECTURE.md" && r.status !== "ok")).toBe(true);
+  });
+
+  it("re-running map after code changes keeps drift clean (receipt updates with the region)", async () => {
+    await seedManifest();
+    await runMap(dir);
+    await writeFile(join(dir, "src", "c.ts"), 'export const c = 3;\n');
+    await runMap(dir);
+    const { runDrift } = await import("../src/drift-cmd.ts");
+    expect((await runDrift({ global: false, dir })).clean).toBe(true);
+  });
+
+  it("does not create a harness.json when none exists", async () => {
+    await runMap(dir);
+    await expect(readFile(join(dir, "harness.json"), "utf8")).rejects.toThrow();
+  });
+});

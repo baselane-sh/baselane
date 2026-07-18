@@ -26,12 +26,12 @@ import {
 // page can never drift into a syntax this CLI doesn't actually accept.
 export const USAGE = [
   "usage:",
-  "  baselane audit <dir> [--json]",
+  "  baselane audit <dir> [--json] [--exclude <patterns>]",
   "  baselane apply <dir> (--pack <id> | --pack-file <path>) [--force] [--dry-run]",
   "  baselane distribute <owner/repo> (--pack <id> | --pack-file <path>) [--portal <url>]",
   "  baselane draft-pack <dir> [--json]",
-  "  baselane graph <dir> [--json]",
-  "  baselane map <dir> [--json] [--llm] [--dry-run]",
+  "  baselane graph <dir> [--json] [--exclude <patterns>]",
+  "  baselane map <dir> [--json] [--llm] [--dry-run] [--exclude <patterns>]",
   "  baselane install [github:owner/repo@ref | @scope/name[@version] | owner/repo@skill] [-g] [--dir <d>] [--dry-run] [--json]",
   "  baselane update [github:owner/repo | @scope/name] [-g] [--dir <d>] [--dry-run]",
   "  baselane drift [-g] [--dir <d>] [--json]",
@@ -41,6 +41,14 @@ export const USAGE = [
 function argValue(argv: string[], flag: string): string | undefined {
   const i = argv.indexOf(flag);
   return i !== -1 ? argv[i + 1] : undefined;
+}
+
+/** `--exclude a,b` → ["a", "b"] (gitignore syntax, comma-separated), or undefined when absent. */
+function excludesArg(argv: string[]): string[] | undefined {
+  const raw = argValue(argv, "--exclude");
+  if (!raw) return undefined;
+  const patterns = raw.split(",").map((p) => p.trim()).filter((p) => p !== "");
+  return patterns.length > 0 ? patterns : undefined;
 }
 
 // #6: --pack-file is the escape hatch for a custom pack the CLI doesn't ship (a portal-authored
@@ -71,7 +79,7 @@ export async function main(argv: string[], deps: CliDeps = {}): Promise<number> 
   }
   try {
     if (cmd === "audit" && dir) {
-      const result = await auditRepo(dir);
+      const result = await auditRepo(dir, { excludes: excludesArg(argv) });
       console.log(argv.includes("--json") ? JSON.stringify(result, null, 2) : formatAuditReport(result));
       return 0;
     }
@@ -94,7 +102,7 @@ export async function main(argv: string[], deps: CliDeps = {}): Promise<number> 
       return 0;
     }
     if (cmd === "graph" && dir) {
-      const r = await runGraph(dir);
+      const r = await runGraph(dir, { excludes: excludesArg(argv) });
       console.log(argv.includes("--json") ? JSON.stringify(r.graph, null, 2) : formatGraphSummary(r.graph, r.written));
       return 0;
     }
@@ -110,7 +118,7 @@ export async function main(argv: string[], deps: CliDeps = {}): Promise<number> 
           );
           return 1;
         }
-        const source = new LocalDirFileSource(dir);
+        const source = new LocalDirFileSource(dir, { excludes: excludesArg(argv) });
         const [profile, conventions, samples, tokens, designSamples] = await Promise.all([
           analyze(source),
           analyzeConventions(source),
@@ -128,7 +136,7 @@ export async function main(argv: string[], deps: CliDeps = {}): Promise<number> 
           return 1;
         }
       }
-      const r = await runMap(dir, { dryRun: argv.includes("--dry-run"), narration, designNarration });
+      const r = await runMap(dir, { dryRun: argv.includes("--dry-run"), narration, designNarration, excludes: excludesArg(argv) });
       console.log(
         argv.includes("--json")
           ? JSON.stringify({ profile: r.profile, conventions: r.conventions, tokens: r.tokens }, null, 2)

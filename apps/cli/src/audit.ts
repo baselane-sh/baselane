@@ -7,8 +7,8 @@ export interface AuditResult {
   recommended: string;
 }
 
-export async function auditRepo(dir: string): Promise<AuditResult> {
-  const profile = await analyze(new LocalDirFileSource(dir));
+export async function auditRepo(dir: string, opts: { excludes?: string[] } = {}): Promise<AuditResult> {
+  const profile = await analyze(new LocalDirFileSource(dir, { excludes: opts.excludes }));
   const packs = await listBuiltinPacks();
   // Flagship default; every pack remains selectable via `apply --pack`.
   const recommended = "software-engineer-harness";

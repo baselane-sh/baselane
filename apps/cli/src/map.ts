@@ -18,7 +18,8 @@ import {
   type DesignTokensReport,
   type NarrationSections,
 } from "@baselane/analyze";
-import { mergeManagedRegion } from "@baselane/packs";
+import { buildManifest, extractManagedRegions, mergeManagedRegion, sha256Hex } from "@baselane/packs";
+import { readManifestWithFallback, targetLocation, writeManifestFile } from "@baselane/materialize";
 import { assertInsideDir } from "./apply.ts";
 
 export interface MapResult {
@@ -32,9 +33,14 @@ export interface MapResult {
 
 export async function runMap(
   dir: string,
-  opts: { dryRun?: boolean; narration?: NarrationSections | null; designNarration?: DesignNarration | null } = {},
+  opts: {
+    dryRun?: boolean;
+    narration?: NarrationSections | null;
+    designNarration?: DesignNarration | null;
+    excludes?: string[];
+  } = {},
 ): Promise<MapResult> {
-  const source = new LocalDirFileSource(dir);
+  const source = new LocalDirFileSource(dir, { excludes: opts.excludes });
   const [profile, graph, conventions, tokens] = await Promise.all([
     analyze(source),
     buildImportGraph(source),
@@ -69,8 +75,48 @@ export async function runMap(
       await writeFile(abs, content, "utf8");
       written.push(rel);
     }
+    await recordMapRegionReceipts(dir, architectureMd, designMd);
   }
   return { profile, conventions, tokens, architectureMd, designMd, written };
+}
+
+/** Issue #1: capability outputs were invisible to drift — apply/map wrote ARCHITECTURE.md and
+ * DESIGN.md but recorded nothing, so hand-edits or deletions never surfaced. Record their managed
+ * regions into harness.json's managedRegions receipts (drift's regions loop already verifies any
+ * path listed there). Region receipts, not whole-file hashes: prose the developer writes OUTSIDE
+ * the region is theirs and must not flag. No-op when the target has no manifest yet — drift has
+ * nothing to run against until an apply/install creates one. */
+async function recordMapRegionReceipts(dir: string, architectureMd: string, designMd: string | null): Promise<void> {
+  const loc = targetLocation({ global: false, dir });
+  const { manifest: existing } = await readManifestWithFallback(loc);
+  if (existing === null) return;
+
+  const managed = new Map(existing.materialized.managedRegions.map((m) => [m.path, m]));
+  const outputs: Array<[string, string]> = [["ARCHITECTURE.md", architectureMd]];
+  if (designMd !== null) outputs.push(["DESIGN.md", designMd]);
+  for (const [path, content] of outputs) {
+    const regions = extractManagedRegions(content).map((r) => ({
+      packId: r.packId,
+      version: r.version,
+      sha256: sha256Hex(r.body),
+    }));
+    if (regions.length === 0) continue;
+    const regionIds = new Set(regions.map((r) => r.packId));
+    const others = (managed.get(path)?.regions ?? []).filter((r) => !regionIds.has(r.packId));
+    managed.set(path, { path, regions: [...others, ...regions] });
+  }
+
+  const manifest = buildManifest({
+    target: loc.target,
+    packs: existing.packs,
+    registry: existing.registry,
+    capabilities: existing.capabilities,
+    receipt: {
+      ...existing.materialized,
+      managedRegions: [...managed.values()].sort((a, b) => a.path.localeCompare(b.path)),
+    },
+  });
+  await writeManifestFile(loc.manifestPath, manifest);
 }
 
 /** Reads a file, returning null (not throwing) when it does not exist. */

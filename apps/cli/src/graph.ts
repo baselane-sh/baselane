@@ -10,8 +10,8 @@ export interface GraphResult {
 }
 
 /** Scans `dir` and writes `.baselane/graph.json` + `.baselane/graph/GRAPH.md` through the containment guard. */
-export async function runGraph(dir: string): Promise<GraphResult> {
-  const graph = await buildImportGraph(new LocalDirFileSource(dir));
+export async function runGraph(dir: string, opts: { excludes?: string[] } = {}): Promise<GraphResult> {
+  const graph = await buildImportGraph(new LocalDirFileSource(dir, { excludes: opts.excludes }));
   const outputs: [string, string][] = [
     [".baselane/graph.json", JSON.stringify(graph, null, 2) + "\n"],
     [".baselane/graph/GRAPH.md", renderGraphMd(graph)],
