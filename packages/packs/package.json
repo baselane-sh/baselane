@@ -1,6 +1,6 @@
 {
   "name": "@baselane/packs",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "type": "module",
   "description": "WorkflowPack schema, validation, and render pipeline, plus the built-in packs shipped by the baselane CLI.",
   "main": "./src/index.ts",
