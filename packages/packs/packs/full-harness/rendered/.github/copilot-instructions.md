@@ -1,10 +1,10 @@
 # Copilot instructions
 
-# Full harness — the complete Everything Claude Code (ECC) corpus
+# Full harness — the complete engineering toolkit
 
-<!-- adapted from affaan-m/ECC (Everything Claude Code) (MIT) — https://github.com/affaan-m/ECC -->
+<!-- adapted from affaan-m/ECC (MIT) — https://github.com/affaan-m/ECC -->
 
-This pack mirrors the entire ECC library — 278 skills, 67 agents, 94 commands, and the full rules corpus below — in a single installable harness. Agent "Prompt Defense Baseline" boilerplate has been stripped; ECC's non-portable plugin-bootstrap hooks are intentionally omitted (they wrap a node -e loader that only runs inside ECC's own install). Everything else is the upstream content, unabridged.
+The maximal harness: 278 skills, 67 agents, 94 commands, and the full rules corpus below — every discipline, role, and command in one installable pack. Non-portable plugin-bootstrap hooks are intentionally omitted (they wrap a node -e loader that only runs inside its origin install); everything else is included unabridged.
 
 ## Rules corpus
 
@@ -9111,9 +9111,9 @@ test('landing hero loads', async ({ page }) => {
 - For highly visual components, visual regression often carries more signal than brittle markup assertions
 - Visual regression supplements coverage targets; it does not replace them
 
-## Workflow pack: Full harness (ECC mirror)
+## Workflow pack: Full harness
 
-The complete Everything Claude Code library in one pack: 278 skills, 67 agents, 94 commands, and the full rules corpus — the maximal harness, unabridged.
+The maximal engineering harness in one pack: 278 skills, 67 agents, 94 commands, and the full rules corpus — every discipline, role, and command, unabridged.
 
 When acting as the a11y-architect role: ## Your Role
 
