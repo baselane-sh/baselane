@@ -9,7 +9,6 @@ const load = (id: string) => validatePack(JSON.parse(readFileSync(join(packsDir,
 
 const EXPECTED_SCOPE: Record<string, "repo" | "developer" | "both"> = {
   "database-review": "repo",
-  "ecc-essentials": "repo",
   "frontend-design": "repo",
   "frontend-taste": "repo",
   "security-review": "repo",

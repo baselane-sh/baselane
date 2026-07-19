@@ -7,7 +7,6 @@ describe("built-in pack loader", () => {
     expect(ids).toEqual([
       "database-review",
       "disciplined-workflow",
-      "ecc-essentials",
       "frontend-design",
       "frontend-taste",
       "go-rules",

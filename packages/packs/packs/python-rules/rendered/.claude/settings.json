@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "if command -v ruff >/dev/null 2>&1; then ruff check .; else echo \"ruff not found — pip install ruff to lint (python-rules)\"; fi"
+            "command": "if ls *.py >/dev/null 2>&1 || [ -f pyproject.toml ]; then if command -v ruff >/dev/null 2>&1; then ruff check . || echo \"ruff failing (python-rules)\"; fi; fi"
           }
         ]
       }

@@ -6,4 +6,5 @@
  */
 export const PACK_ALIASES: Record<string, string> = {
   "test-loop": "software-engineer-harness",
+  "ecc-essentials": "software-engineer-harness",
 };

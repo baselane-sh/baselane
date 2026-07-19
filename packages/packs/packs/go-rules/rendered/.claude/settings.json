@@ -9,6 +9,15 @@
             "command": "if command -v gofmt >/dev/null 2>&1; then gofmt -l .; else echo \"gofmt not found — install the Go toolchain to check formatting (go-rules)\"; fi"
           }
         ]
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [ -f go.mod ] && command -v go >/dev/null 2>&1; then gofmt -l . && go vet ./... || echo \"gofmt/vet issues (go-rules)\"; fi"
+          }
+        ]
       }
     ]
   }

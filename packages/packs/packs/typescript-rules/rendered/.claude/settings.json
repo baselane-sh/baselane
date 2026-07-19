@@ -9,6 +9,15 @@
             "command": "if command -v prettier >/dev/null 2>&1; then prettier --check .; else echo \"prettier not found — install prettier to check formatting (typescript-rules)\"; fi"
           }
         ]
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [ -f tsconfig.json ] && command -v npx >/dev/null 2>&1; then npx tsc --noEmit || echo \"typecheck failing (typescript-rules)\"; fi"
+          }
+        ]
       }
     ]
   }

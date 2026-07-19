@@ -1,6 +1,6 @@
 {
   "name": "@baselane/distribute",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "type": "module",
   "description": "GitHub REST PR distribution and git-ref pack resolution for baselane workflow packs.",
   "main": "./src/index.ts",

@@ -25,7 +25,7 @@ describe("renderBundleFiles", () => {
 
   it("includes settings.json (claude-identical body) when the pack has hooks, even with no agents or commands", async () => {
     const pack = await loadBuiltinPack("software-engineer-harness");
-    const stripped = { ...pack, agents: [], commands: [], capabilities: [] };
+    const stripped = { ...pack, agents: [], commands: [], skills: [], capabilities: [] };
     const bundle = renderBundleFiles(stripped);
     const claude = renderClaudeFiles(stripped);
     expect(bundle).toEqual({ "settings.json": claude[".claude/settings.json"] });
@@ -33,7 +33,7 @@ describe("renderBundleFiles", () => {
 
   it("renders an empty map for a pack with no agents, commands, hooks, or capabilities", async () => {
     const pack = await loadBuiltinPack("software-engineer-harness");
-    const stripped = { ...pack, agents: [], commands: [], hooks: [], capabilities: [] };
+    const stripped = { ...pack, agents: [], commands: [], hooks: [], skills: [], capabilities: [] };
     expect(renderBundleFiles(stripped)).toEqual({});
   });
 });

@@ -11,6 +11,17 @@
         ]
       }
     ],
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo \"Reminder from database-review: schema/migration file edits need a documented rollback path (or explicit forward-only + remediation plan) and must not hold long locks on production-sized tables — batch backfills, build indexes concurrently, and avoid NOT NULL columns without a default on existing large tables.\""
+          }
+        ]
+      }
+    ],
     "Stop": [
       {
         "matcher": "",

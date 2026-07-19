@@ -13,7 +13,6 @@ describe("auditRepo", () => {
     expect(r.packs).toEqual([
       "database-review",
       "disciplined-workflow",
-      "ecc-essentials",
       "frontend-design",
       "frontend-taste",
       "go-rules",
