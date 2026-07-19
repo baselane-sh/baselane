@@ -15,6 +15,7 @@ const EXPECTED_SCOPE: Record<string, "repo" | "developer" | "both"> = {
   "go-rules": "repo",
   "python-rules": "repo",
   "typescript-rules": "repo",
+  "full-harness": "both",
   "second-brain": "both",
   "software-engineer-harness": "both",
   "disciplined-workflow": "both",

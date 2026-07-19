@@ -9,6 +9,7 @@ describe("built-in pack loader", () => {
       "disciplined-workflow",
       "frontend-design",
       "frontend-taste",
+      "full-harness",
       "go-rules",
       "python-rules",
       "second-brain",

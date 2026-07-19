@@ -1,0 +1,444 @@
+# CLAUDE.md
+
+@AGENTS.md
+
+This project defines a native Claude Code implementation of this workflow pack:
+- Subagent: `.claude/agents/a11y-architect.md`
+- Subagent: `.claude/agents/agent-evaluator.md`
+- Subagent: `.claude/agents/architect.md`
+- Subagent: `.claude/agents/build-error-resolver.md`
+- Subagent: `.claude/agents/chief-of-staff.md`
+- Subagent: `.claude/agents/code-architect.md`
+- Subagent: `.claude/agents/code-explorer.md`
+- Subagent: `.claude/agents/code-reviewer.md`
+- Subagent: `.claude/agents/code-simplifier.md`
+- Subagent: `.claude/agents/comment-analyzer.md`
+- Subagent: `.claude/agents/conversation-analyzer.md`
+- Subagent: `.claude/agents/cpp-build-resolver.md`
+- Subagent: `.claude/agents/cpp-reviewer.md`
+- Subagent: `.claude/agents/csharp-reviewer.md`
+- Subagent: `.claude/agents/dart-build-resolver.md`
+- Subagent: `.claude/agents/database-reviewer.md`
+- Subagent: `.claude/agents/django-build-resolver.md`
+- Subagent: `.claude/agents/django-reviewer.md`
+- Subagent: `.claude/agents/doc-updater.md`
+- Subagent: `.claude/agents/docs-lookup.md`
+- Subagent: `.claude/agents/e2e-runner.md`
+- Subagent: `.claude/agents/fastapi-reviewer.md`
+- Subagent: `.claude/agents/flutter-reviewer.md`
+- Subagent: `.claude/agents/fsharp-reviewer.md`
+- Subagent: `.claude/agents/gan-evaluator.md`
+- Subagent: `.claude/agents/gan-generator.md`
+- Subagent: `.claude/agents/gan-planner.md`
+- Subagent: `.claude/agents/go-build-resolver.md`
+- Subagent: `.claude/agents/go-reviewer.md`
+- Subagent: `.claude/agents/harmonyos-app-resolver.md`
+- Subagent: `.claude/agents/harness-optimizer.md`
+- Subagent: `.claude/agents/healthcare-reviewer.md`
+- Subagent: `.claude/agents/homelab-architect.md`
+- Subagent: `.claude/agents/java-build-resolver.md`
+- Subagent: `.claude/agents/java-reviewer.md`
+- Subagent: `.claude/agents/kotlin-build-resolver.md`
+- Subagent: `.claude/agents/kotlin-reviewer.md`
+- Subagent: `.claude/agents/loop-operator.md`
+- Subagent: `.claude/agents/marketing-agent.md`
+- Subagent: `.claude/agents/mle-reviewer.md`
+- Subagent: `.claude/agents/network-architect.md`
+- Subagent: `.claude/agents/network-config-reviewer.md`
+- Subagent: `.claude/agents/network-troubleshooter.md`
+- Subagent: `.claude/agents/opensource-forker.md`
+- Subagent: `.claude/agents/opensource-packager.md`
+- Subagent: `.claude/agents/opensource-sanitizer.md`
+- Subagent: `.claude/agents/performance-optimizer.md`
+- Subagent: `.claude/agents/php-reviewer.md`
+- Subagent: `.claude/agents/planner.md`
+- Subagent: `.claude/agents/pr-test-analyzer.md`
+- Subagent: `.claude/agents/python-reviewer.md`
+- Subagent: `.claude/agents/pytorch-build-resolver.md`
+- Subagent: `.claude/agents/react-build-resolver.md`
+- Subagent: `.claude/agents/react-reviewer.md`
+- Subagent: `.claude/agents/refactor-cleaner.md`
+- Subagent: `.claude/agents/rust-build-resolver.md`
+- Subagent: `.claude/agents/rust-reviewer.md`
+- Subagent: `.claude/agents/security-reviewer.md`
+- Subagent: `.claude/agents/seo-specialist.md`
+- Subagent: `.claude/agents/silent-failure-hunter.md`
+- Subagent: `.claude/agents/spec-miner.md`
+- Subagent: `.claude/agents/swift-build-resolver.md`
+- Subagent: `.claude/agents/swift-reviewer.md`
+- Subagent: `.claude/agents/tdd-guide.md`
+- Subagent: `.claude/agents/type-design-analyzer.md`
+- Subagent: `.claude/agents/typescript-reviewer.md`
+- Subagent: `.claude/agents/vue-reviewer.md`
+- Command: `.claude/commands/aside.md`
+- Command: `.claude/commands/auto-update.md`
+- Command: `.claude/commands/build-fix.md`
+- Command: `.claude/commands/checkpoint.md`
+- Command: `.claude/commands/code-review.md`
+- Command: `.claude/commands/cost-report.md`
+- Command: `.claude/commands/cpp-build.md`
+- Command: `.claude/commands/cpp-review.md`
+- Command: `.claude/commands/cpp-test.md`
+- Command: `.claude/commands/ecc-guide.md`
+- Command: `.claude/commands/epic-claim.md`
+- Command: `.claude/commands/epic-decompose.md`
+- Command: `.claude/commands/epic-publish.md`
+- Command: `.claude/commands/epic-review.md`
+- Command: `.claude/commands/epic-sync.md`
+- Command: `.claude/commands/epic-unblock.md`
+- Command: `.claude/commands/epic-validate.md`
+- Command: `.claude/commands/evolve.md`
+- Command: `.claude/commands/fastapi-review.md`
+- Command: `.claude/commands/feature-dev.md`
+- Command: `.claude/commands/flutter-build.md`
+- Command: `.claude/commands/flutter-review.md`
+- Command: `.claude/commands/flutter-test.md`
+- Command: `.claude/commands/gan-build.md`
+- Command: `.claude/commands/gan-design.md`
+- Command: `.claude/commands/go-build.md`
+- Command: `.claude/commands/go-review.md`
+- Command: `.claude/commands/go-test.md`
+- Command: `.claude/commands/gradle-build.md`
+- Command: `.claude/commands/harness-audit.md`
+- Command: `.claude/commands/hookify-configure.md`
+- Command: `.claude/commands/hookify-help.md`
+- Command: `.claude/commands/hookify-list.md`
+- Command: `.claude/commands/hookify.md`
+- Command: `.claude/commands/instinct-export.md`
+- Command: `.claude/commands/instinct-import.md`
+- Command: `.claude/commands/instinct-status.md`
+- Command: `.claude/commands/jira.md`
+- Command: `.claude/commands/kotlin-build.md`
+- Command: `.claude/commands/kotlin-review.md`
+- Command: `.claude/commands/kotlin-test.md`
+- Command: `.claude/commands/learn-eval.md`
+- Command: `.claude/commands/learn.md`
+- Command: `.claude/commands/loop-start.md`
+- Command: `.claude/commands/loop-status.md`
+- Command: `.claude/commands/marketing-campaign.md`
+- Command: `.claude/commands/model-route.md`
+- Command: `.claude/commands/multi-backend.md`
+- Command: `.claude/commands/multi-execute.md`
+- Command: `.claude/commands/multi-frontend.md`
+- Command: `.claude/commands/multi-plan.md`
+- Command: `.claude/commands/multi-workflow.md`
+- Command: `.claude/commands/orch-add-feature.md`
+- Command: `.claude/commands/orch-build-mvp.md`
+- Command: `.claude/commands/orch-change-feature.md`
+- Command: `.claude/commands/orch-fix-defect.md`
+- Command: `.claude/commands/orch-refine-code.md`
+- Command: `.claude/commands/orch-review.md`
+- Command: `.claude/commands/plan-canvas.md`
+- Command: `.claude/commands/plan-prd.md`
+- Command: `.claude/commands/plan.md`
+- Command: `.claude/commands/pm2.md`
+- Command: `.claude/commands/pr.md`
+- Command: `.claude/commands/project-init.md`
+- Command: `.claude/commands/projects.md`
+- Command: `.claude/commands/promote.md`
+- Command: `.claude/commands/prp-commit.md`
+- Command: `.claude/commands/prp-implement.md`
+- Command: `.claude/commands/prp-plan.md`
+- Command: `.claude/commands/prp-pr.md`
+- Command: `.claude/commands/prp-prd.md`
+- Command: `.claude/commands/prune.md`
+- Command: `.claude/commands/python-review.md`
+- Command: `.claude/commands/quality-gate.md`
+- Command: `.claude/commands/react-build.md`
+- Command: `.claude/commands/react-review.md`
+- Command: `.claude/commands/react-test.md`
+- Command: `.claude/commands/refactor-clean.md`
+- Command: `.claude/commands/resume-session.md`
+- Command: `.claude/commands/review-pr.md`
+- Command: `.claude/commands/rust-build.md`
+- Command: `.claude/commands/rust-review.md`
+- Command: `.claude/commands/rust-test.md`
+- Command: `.claude/commands/santa-loop.md`
+- Command: `.claude/commands/save-session.md`
+- Command: `.claude/commands/security-scan.md`
+- Command: `.claude/commands/sessions.md`
+- Command: `.claude/commands/setup-pm.md`
+- Command: `.claude/commands/skill-create.md`
+- Command: `.claude/commands/skill-health.md`
+- Command: `.claude/commands/test-coverage.md`
+- Command: `.claude/commands/update-codemaps.md`
+- Command: `.claude/commands/update-docs.md`
+- Command: `.claude/commands/vue-review.md`
+- Skill: `.claude/skills/accessibility/SKILL.md` — Design, implement, and audit inclusive digital products using WCAG 2.2 Level AA
+- Skill: `.claude/skills/agent-architecture-audit/SKILL.md` — Full-stack diagnostic for agent and LLM applications. Audits the 12-layer agent stack for wrapper regression, memory pollution, tool discipline failures, hidden repair loops, and rendering corruption. Produces severity-ranked findings with code-first fixes. Essential for developers building agent applications, autonomous loops, or any LLM-powered feature.
+- Skill: `.claude/skills/agent-eval/SKILL.md` — Head-to-head comparison of coding agents (Claude Code, Aider, Codex, etc.) on custom tasks with pass rate, cost, time, and consistency metrics
+- Skill: `.claude/skills/agent-harness-construction/SKILL.md` — Design and optimize AI agent action spaces, tool definitions, and observation formatting for higher completion rates.
+- Skill: `.claude/skills/agent-introspection-debugging/SKILL.md` — Structured self-debugging workflow for AI agent failures using capture, diagnosis, contained recovery, and introspection reports.
+- Skill: `.claude/skills/agent-payment-x402/SKILL.md` — Add x402 payment execution to AI agents with per-task budgets, spending controls, and non-custodial wallets. Supports Base through agentwallet-sdk and X Layer through OKX Payments / OKX Agent Payments Protocol.
+- Skill: `.claude/skills/agent-self-evaluation/SKILL.md` — Use after completing any non-trivial task. The agent self-rates its output on 5 axes — accuracy, completeness, clarity, actionability, conciseness — with concrete evidence per criterion. Produces a structured 1-5 scorecard with specific improvement suggestions.
+- Skill: `.claude/skills/agent-sort/SKILL.md` — Build an evidence-backed ECC install plan for a specific repo by sorting skills, commands, rules, hooks, and extras into DAILY vs LIBRARY buckets using parallel repo-aware review passes. Use when ECC should be trimmed to what a project actually needs instead of loading the full bundle.
+- Skill: `.claude/skills/agentic-engineering/SKILL.md` — Operate as an agentic engineer using eval-first execution, decomposition, and cost-aware model routing.
+- Skill: `.claude/skills/agentic-os/SKILL.md` — Build persistent multi-agent operating systems on Claude Code. Covers kernel architecture, specialist agents, slash commands, file-based memory, scheduled automation, and state management without external databases.
+- Skill: `.claude/skills/ai-first-engineering/SKILL.md` — Engineering operating model for teams where AI agents generate a large share of implementation output.
+- Skill: `.claude/skills/ai-regression-testing/SKILL.md` — Regression testing strategies for AI-assisted development. Sandbox-mode API testing without database dependencies, automated bug-check workflows, and patterns to catch AI blind spots where the same model writes and reviews code.
+- Skill: `.claude/skills/android-clean-architecture/SKILL.md` — Clean Architecture patterns for Android and Kotlin Multiplatform projects — module structure, dependency rules, UseCases, Repositories, and data layer patterns.
+- Skill: `.claude/skills/angular-developer/SKILL.md` — Generates Angular code and provides architectural guidance. Trigger when creating projects, components, or services, or for best practices on reactivity (signals, linkedSignal, resource), forms, dependency injection, routing, SSR, accessibility (ARIA), animations, styling (component styles, Tailwind CSS), testing, or CLI tooling.
+- Skill: `.claude/skills/api-connector-builder/SKILL.md` — Build a new API connector or provider by matching the target repo's existing integration pattern exactly. Use when adding one more integration without inventing a second architecture.
+- Skill: `.claude/skills/api-design/SKILL.md` — REST API design patterns including resource naming, status codes, pagination, filtering, error responses, versioning, and rate limiting for production APIs.
+- Skill: `.claude/skills/architecture-decision-records/SKILL.md` — Capture architectural decisions made during Claude Code sessions as structured ADRs. Auto-detects decision moments, records context, alternatives considered, and rationale. Maintains an ADR log so future developers understand why the codebase is shaped the way it is.
+- Skill: `.claude/skills/article-writing/SKILL.md` — Write articles, guides, blog posts, tutorials, newsletter issues, and other long-form content in a distinctive voice derived from supplied examples or brand guidance. Use when the user wants polished written content longer than a paragraph, especially when voice consistency, structure, and credibility matter.
+- Skill: `.claude/skills/automation-audit-ops/SKILL.md` — Evidence-first automation inventory and overlap audit workflow for ECC. Use when the user wants to know which jobs, hooks, connectors, MCP servers, or wrappers are live, broken, redundant, or missing before fixing anything.
+- Skill: `.claude/skills/autonomous-agent-harness/SKILL.md` — Transform Claude Code into a fully autonomous agent system with persistent memory, scheduled operations, computer use, and task queuing. Replaces standalone agent frameworks (Hermes, AutoGPT) by leveraging Claude Code's native crons, dispatch, MCP tools, and memory. Use when the user wants continuous autonomous operation, scheduled tasks, or a self-directing agent loop.
+- Skill: `.claude/skills/autonomous-loops/SKILL.md` — Patterns and architectures for autonomous Claude Code loops — from simple sequential pipelines to RFC-driven multi-agent DAG systems.
+- Skill: `.claude/skills/backend-patterns/SKILL.md` — Backend architecture patterns, API design, database optimization, and server-side best practices for Node.js, Express, and Next.js API routes.
+- Skill: `.claude/skills/benchmark/SKILL.md` — Use this skill to measure performance baselines, detect regressions before/after PRs, and compare stack alternatives.
+- Skill: `.claude/skills/benchmark-methodology/SKILL.md` — >-
+- Skill: `.claude/skills/benchmark-optimization-loop/SKILL.md` — Use when the user asks to make something faster, try many variants, run recursive optimization, benchmark latency/throughput/cost, or choose the best implementation by repeated measured tests.
+- Skill: `.claude/skills/blender-motion-state-inspection/SKILL.md` — Use this skill when inspecting Blender characters, rigs, poses, animation retargeting, ground contact, facing direction, or model-vs-motion alignment where screenshots alone are not enough.
+- Skill: `.claude/skills/blueprint/SKILL.md` — >-
+- Skill: `.claude/skills/brand-discovery/SKILL.md` — >-
+- Skill: `.claude/skills/brand-voice/SKILL.md` — Build a source-derived writing style profile from real posts, essays, launch notes, docs, or site copy, then reuse that profile across content, outreach, and social workflows. Use when the user wants voice consistency without generic AI writing tropes.
+- Skill: `.claude/skills/browser-qa/SKILL.md` — Use this skill to automate visual testing and UI interaction verification using browser automation after deploying features.
+- Skill: `.claude/skills/bun-runtime/SKILL.md` — Bun as runtime, package manager, bundler, and test runner. When to choose Bun vs Node, migration notes, and Vercel support.
+- Skill: `.claude/skills/canary-watch/SKILL.md` — Use this skill to monitor and verify a deployed URL after releases — checks HTTP endpoints, SSE streams, static assets, console errors, and performance regressions after deploys, merges, or dependency upgrades. Smoke / canary / post-deploy verification.
+- Skill: `.claude/skills/carrier-relationship-management/SKILL.md` — >
+- Skill: `.claude/skills/cisco-ios-patterns/SKILL.md` — Cisco IOS and IOS-XE review patterns for show commands, config hierarchy, wildcard masks, ACL placement, interface hygiene, and safe change-window verification.
+- Skill: `.claude/skills/ck/SKILL.md` — Persistent per-project memory for Claude Code. Auto-loads project context on session start, tracks sessions with git activity, and writes to native memory. Commands run deterministic Node.js scripts — behavior is consistent across model versions.
+- Skill: `.claude/skills/claude-devfleet/SKILL.md` — Orchestrate multi-agent coding tasks via Claude DevFleet — plan projects, dispatch parallel agents in isolated worktrees, monitor progress, and read structured reports.
+- Skill: `.claude/skills/click-path-audit/SKILL.md` — Trace every user-facing button/touchpoint through its full state change sequence to find bugs where functions individually work but cancel each other out, produce wrong final state, or leave the UI in an inconsistent state. Use when: systematic debugging found no bugs but users report broken buttons, or after any major refactor touching shared state stores.
+- Skill: `.claude/skills/clickhouse-io/SKILL.md` — ClickHouse database patterns, query optimization, analytics, and data engineering best practices for high-performance analytical workloads.
+- Skill: `.claude/skills/code-tour/SKILL.md` — Create CodeTour `.tour` files — persona-targeted, step-by-step walkthroughs with real file and line anchors. Use for onboarding tours, architecture walkthroughs, PR tours, RCA tours, and structured "explain how this works" requests.
+- Skill: `.claude/skills/codebase-onboarding/SKILL.md` — Analyze an unfamiliar codebase and generate a structured onboarding guide with architecture map, key entry points, conventions, and a starter CLAUDE.md. Use when joining a new project or setting up Claude Code for the first time in a repo.
+- Skill: `.claude/skills/codehealth-mcp/SKILL.md` — Real-time structural Code Health via CodeScene MCP — review before edits, verify score deltas after changes, gate commits and PRs. Use when reviewing code quality, refactoring, checking if AI changes degraded a file, or before commit/PR.
+- Skill: `.claude/skills/coding-standards/SKILL.md` — Baseline cross-project coding conventions for naming, readability, immutability, and code-quality review. Use detailed frontend or backend skills for framework-specific patterns.
+- Skill: `.claude/skills/competitive-platform-analysis/SKILL.md` — >-
+- Skill: `.claude/skills/competitive-report-structure/SKILL.md` — >-
+- Skill: `.claude/skills/compose-multiplatform-patterns/SKILL.md` — Compose Multiplatform and Jetpack Compose patterns for KMP projects — state management, navigation, theming, performance, and platform-specific UI.
+- Skill: `.claude/skills/config-gc/SKILL.md` — Garbage collection for your Claude Code configuration. Periodically scans ~/.claude (skills, memory, hooks, permissions, MCP servers, caches) for redundant, stale, orphaned, or low-value items, then walks the user through a confirm-each-deletion cleanup. Use when the user says "clean up my config", "config GC", "too many skills", "audit my setup", "my .claude is bloated", or asks for a periodic config review.
+- Skill: `.claude/skills/configure-ecc/SKILL.md` — Interactive installer for Everything Claude Code — guides users through selecting and installing skills and rules to user-level or project-level directories, verifies paths, and optionally optimizes installed files.
+- Skill: `.claude/skills/connections-optimizer/SKILL.md` — Reorganize the user's X and LinkedIn network with review-first pruning, add/follow recommendations, and channel-specific warm outreach drafted in the user's real voice. Use when the user wants to clean up following lists, grow toward current priorities, or rebalance a social graph around higher-signal relationships.
+- Skill: `.claude/skills/content-engine/SKILL.md` — Create platform-native content systems for X, LinkedIn, TikTok, YouTube, newsletters, and repurposed multi-platform campaigns. Use when the user wants social posts, threads, scripts, content calendars, or one source asset adapted cleanly across platforms.
+- Skill: `.claude/skills/content-hash-cache-pattern/SKILL.md` — Cache expensive file processing results using SHA-256 content hashes — path-independent, auto-invalidating, with service layer separation.
+- Skill: `.claude/skills/context-budget/SKILL.md` — Audits Claude Code context window consumption across agents, skills, MCP servers, and rules. Identifies bloat, redundant components, and produces prioritized token-savings recommendations.
+- Skill: `.claude/skills/continuous-agent-loop/SKILL.md` — Patterns for continuous autonomous agent loops with quality gates, evals, and recovery controls.
+- Skill: `.claude/skills/continuous-learning/SKILL.md` — [DEPRECATED - use continuous-learning-v2] Legacy v1 stop-hook skill extractor. v2 is a strict superset with instinct-based, project-scoped, hook-reliable learning. Do not invoke v1; route continuous learning, session learning, and pattern extraction requests to continuous-learning-v2.
+- Skill: `.claude/skills/continuous-learning-v2/SKILL.md` — Instinct-based learning system that observes sessions via hooks, creates atomic instincts with confidence scoring, and evolves them into skills/commands/agents. v2.1 adds project-scoped instincts to prevent cross-project contamination.
+- Skill: `.claude/skills/cost-aware-llm-pipeline/SKILL.md` — Cost optimization patterns for LLM API usage — model routing by task complexity, budget tracking, retry logic, and prompt caching.
+- Skill: `.claude/skills/cost-tracking/SKILL.md` — Track and report Claude Code token usage, spending, and budgets from the local ECC cost-tracker metrics log. Use when the user asks about costs, spending, usage, tokens, budgets, or cost breakdowns by model, session, or date.
+- Skill: `.claude/skills/council/SKILL.md` — Convene a four-voice council for ambiguous decisions, tradeoffs, and go/no-go calls. Use when multiple valid paths exist and you need structured disagreement before choosing.
+- Skill: `.claude/skills/cpp-coding-standards/SKILL.md` — C++ coding standards based on the C++ Core Guidelines (isocpp.github.io). Use when writing, reviewing, or refactoring C++ code to enforce modern, safe, and idiomatic practices.
+- Skill: `.claude/skills/cpp-testing/SKILL.md` — Use only when writing/updating/fixing C++ tests, configuring GoogleTest/CTest, diagnosing failing or flaky tests, or adding coverage/sanitizers.
+- Skill: `.claude/skills/crosspost/SKILL.md` — Multi-platform content distribution across X, LinkedIn, Threads, and Bluesky. Adapts content per platform using content-engine patterns. Never posts identical content cross-platform. Use when the user wants to distribute content across social platforms.
+- Skill: `.claude/skills/csharp-testing/SKILL.md` — C# and .NET testing patterns with xUnit, FluentAssertions, mocking, integration tests, and test organization best practices.
+- Skill: `.claude/skills/customer-billing-ops/SKILL.md` — Operate customer billing workflows such as subscriptions, refunds, churn triage, billing-portal recovery, and plan analysis using connected billing tools like Stripe. Use when the user needs to help a customer, inspect subscription state, or manage revenue-impacting billing operations.
+- Skill: `.claude/skills/customs-trade-compliance/SKILL.md` — >
+- Skill: `.claude/skills/dart-flutter-patterns/SKILL.md` — Production-ready Dart and Flutter patterns covering null safety, immutable state, async composition, widget architecture, popular state management frameworks (BLoC, Riverpod, Provider), GoRouter navigation, Dio networking, Freezed code generation, and clean architecture.
+- Skill: `.claude/skills/dashboard-builder/SKILL.md` — Build monitoring dashboards that answer real operator questions for Grafana, SigNoz, and similar platforms. Use when turning metrics into a working dashboard instead of a vanity board.
+- Skill: `.claude/skills/data-scraper-agent/SKILL.md` — Build a fully automated AI-powered data collection agent for any public source — job boards, prices, news, GitHub, sports, anything. Runs on a schedule, enriches data with a free LLM (Gemini Flash), stores results in Notion/Sheets/Supabase, and learns from user feedback. Runs 100% free on GitHub Actions. Use when the user wants to monitor, collect, or track any public data automatically.
+- Skill: `.claude/skills/data-throughput-accelerator/SKILL.md` — Use when large data ingestion, backfill, export, ETL, warehouse loading, manifest catch-up, or table synchronization needs to become much faster while preserving data correctness.
+- Skill: `.claude/skills/database-migrations/SKILL.md` — Database migration best practices for schema changes, data migrations, rollbacks, and zero-downtime deployments across PostgreSQL, MySQL, and common ORMs (Prisma, Drizzle, Kysely, Django, TypeORM, golang-migrate).
+- Skill: `.claude/skills/deep-research/SKILL.md` — Multi-source deep research using firecrawl and exa MCPs. Searches the web, synthesizes findings, and delivers cited reports with source attribution. Use when the user wants thorough research on any topic with evidence and citations.
+- Skill: `.claude/skills/defi-amm-security/SKILL.md` — Security checklist for Solidity AMM contracts, liquidity pools, and swap flows. Covers reentrancy, CEI ordering, donation or inflation attacks, oracle manipulation, slippage, admin controls, and integer math.
+- Skill: `.claude/skills/delivery-gate/SKILL.md` — Stop hook that blocks Claude from finishing until quality checks pass. Detects rationalization patterns (surface text heuristics), stale learning logs (filesystem mtime), and low disk space. Complements self-audit by mechanically enforcing learning capture habits.
+- Skill: `.claude/skills/deployment-patterns/SKILL.md` — Deployment workflows, CI/CD pipeline patterns, Docker containerization, health checks, rollback strategies, and production readiness checklists for web applications.
+- Skill: `.claude/skills/design-system/SKILL.md` — Use this skill to generate or audit design systems, check visual consistency, and review PRs that touch styling.
+- Skill: `.claude/skills/django-celery/SKILL.md` — Django + Celery async task patterns — configuration, task design, beat scheduling, retries, canvas workflows, monitoring, and testing. Use when adding background jobs, scheduled tasks, or async processing to a Django app.
+- Skill: `.claude/skills/django-patterns/SKILL.md` — Django architecture patterns, REST API design with DRF, ORM best practices, caching, signals, middleware, and production-grade Django apps.
+- Skill: `.claude/skills/django-security/SKILL.md` — Django security best practices, authentication, authorization, CSRF protection, SQL injection prevention, XSS prevention, and secure deployment configurations.
+- Skill: `.claude/skills/django-tdd/SKILL.md` — Django testing strategies with pytest-django, TDD methodology, factory_boy, mocking, coverage, and testing Django REST Framework APIs.
+- Skill: `.claude/skills/django-verification/SKILL.md` — Verification loop for Django projects: migrations, linting, tests with coverage, security scans, and deployment readiness checks before release or PR.
+- Skill: `.claude/skills/dmux-workflows/SKILL.md` — Multi-agent orchestration using dmux (tmux pane manager for AI agents). Patterns for parallel agent workflows across Claude Code, Codex, OpenCode, and other harnesses. Use when running multiple agent sessions in parallel or coordinating multi-agent development workflows.
+- Skill: `.claude/skills/docker-patterns/SKILL.md` — Docker and Docker Compose patterns for local development, container security, networking, volume strategies, and multi-service orchestration.
+- Skill: `.claude/skills/documentation-lookup/SKILL.md` — Use up-to-date library and framework docs via Context7 MCP instead of training data. Activates for setup questions, API references, code examples, or when the user names a framework (e.g. React, Next.js, Prisma).
+- Skill: `.claude/skills/dotnet-patterns/SKILL.md` — Idiomatic C# and .NET patterns, conventions, dependency injection, async/await, and best practices for building robust, maintainable .NET applications.
+- Skill: `.claude/skills/dynamic-workflow-mode/SKILL.md` — Design task-local harnesses, eval gates, and reusable skill extraction for Claude dynamic workflow mode and other adaptive agent harnesses.
+- Skill: `.claude/skills/e2e-testing/SKILL.md` — Playwright E2E testing patterns, Page Object Model, configuration, CI/CD integration, artifact management, and flaky test strategies.
+- Skill: `.claude/skills/ecc-guide/SKILL.md` — Guide users through ECC's current agents, skills, commands, hooks, rules, install profiles, and project onboarding by reading the live repository surface before answering.
+- Skill: `.claude/skills/ecc-recipes/SKILL.md` — Map a described workflow to the right ECC command-GROUP with run-order and stop condition, and browse all command-group recipe families. Adds a family-grouping + run-order + when-to-stop layer on top of the flat command catalog. Advisory only. TRIGGER when the user says which commands for X, what command group runs X, show ECC recipes, list ECC pipelines, or how do I run a workflow with ECC. DO NOT TRIGGER when the user wants the task executed directly, wants a single-command deep doc (use ecc-guide), or wants a draft prompt rewritten (use prompt-optimizer).
+- Skill: `.claude/skills/ecc-tools-cost-audit/SKILL.md` — Evidence-first ECC Tools burn and billing audit workflow. Use when investigating runaway PR creation, quota bypass, premium-model leakage, duplicate jobs, or GitHub App cost spikes in the ECC Tools repo.
+- Skill: `.claude/skills/email-ops/SKILL.md` — Evidence-first mailbox triage, drafting, send verification, and sent-mail-safe follow-up workflow for ECC. Use when the user wants to organize email, draft or send through the real mail surface, or prove what landed in Sent.
+- Skill: `.claude/skills/energy-procurement/SKILL.md` — >
+- Skill: `.claude/skills/enterprise-agent-ops/SKILL.md` — Operate long-lived agent workloads with observability, security boundaries, and lifecycle management.
+- Skill: `.claude/skills/error-handling/SKILL.md` — Patterns for robust error handling across TypeScript, Python, and Go. Covers typed errors, error boundaries, retries, circuit breakers, and user-facing error messages.
+- Skill: `.claude/skills/eval-harness/SKILL.md` — Formal evaluation framework for Claude Code sessions implementing eval-driven development (EDD) principles
+- Skill: `.claude/skills/evm-token-decimals/SKILL.md` — Prevent silent decimal mismatch bugs across EVM chains. Covers runtime decimal lookup, chain-aware caching, bridged-token precision drift, and safe normalization for bots, dashboards, and DeFi tools.
+- Skill: `.claude/skills/exa-search/SKILL.md` — Neural search via Exa MCP for web, code, and company research. Use when the user needs web search, code examples, company intel, people lookup, or AI-powered deep research with Exa's neural search engine.
+- Skill: `.claude/skills/fal-ai-media/SKILL.md` — Unified media generation via fal.ai MCP — image, video, and audio. Covers text-to-image (Nano Banana), text/image-to-video (Seedance, Kling, Veo 3), text-to-speech (CSM-1B), and video-to-audio (ThinkSound). Use when the user wants to generate images, videos, or audio with AI.
+- Skill: `.claude/skills/fastapi-patterns/SKILL.md` — FastAPI best practices covering project structure, Pydantic v2 schemas, dependency injection, async handlers, authentication, authorization, transactional service layers, and testing with httpx and pytest.
+- Skill: `.claude/skills/finance-billing-ops/SKILL.md` — Evidence-first revenue, pricing, refunds, team-billing, and billing-model truth workflow for ECC. Use when the user wants a sales snapshot, pricing comparison, duplicate-charge diagnosis, or code-backed billing reality instead of generic payments advice.
+- Skill: `.claude/skills/flox-environments/SKILL.md` — Create reproducible, cross-platform (macOS/Linux) development environments with Flox, a declarative Nix-based environment manager. Use when setting up project toolchains for any language, installing system-level dependencies (compilers, databases, native libs like openssl/BLAS), pinning exact package versions for a team, running local services (PostgreSQL, Redis, Kafka), onboarding developers with one command, or solving 'works on my machine' problems — including agent/vibe-coding setups that need project-scoped tools without sudo. Also use when the user mentions .flox/, manifest.toml, flox activate, or FloxHub.
+- Skill: `.claude/skills/flutter-dart-code-review/SKILL.md` — Library-agnostic Flutter/Dart code review checklist covering widget best practices, state management patterns (BLoC, Riverpod, Provider, GetX, MobX, Signals), Dart idioms, performance, accessibility, security, and clean architecture.
+- Skill: `.claude/skills/foundation-models-on-device/SKILL.md` — Apple FoundationModels framework for on-device LLM — text generation, guided generation with @Generable, tool calling, and snapshot streaming in iOS 26+.
+- Skill: `.claude/skills/frontend-a11y/SKILL.md` — >
+- Skill: `.claude/skills/frontend-design-direction/SKILL.md` — Set an ECC-specific frontend design direction for production UI work. Use when building or improving websites, dashboards, applications, components, landing pages, visual tools, or any web UI that needs stronger product-specific design judgment.
+- Skill: `.claude/skills/frontend-patterns/SKILL.md` — Frontend development patterns for React, Next.js, state management, performance optimization, and UI best practices.
+- Skill: `.claude/skills/frontend-slides/SKILL.md` — Create stunning, animation-rich HTML presentations from scratch or by converting PowerPoint files. Use when the user wants to build a presentation, convert a PPT/PPTX to web, or create slides for a talk/pitch. Helps non-designers discover their aesthetic through visual exploration rather than abstract choices.
+- Skill: `.claude/skills/fsharp-testing/SKILL.md` — F# testing patterns with xUnit, FsUnit, Unquote, FsCheck property-based testing, integration tests, and test organization best practices.
+- Skill: `.claude/skills/gan-style-harness/SKILL.md` — GAN-inspired Generator-Evaluator agent harness for building high-quality applications autonomously. Based on Anthropic's March 2026 harness design paper.
+- Skill: `.claude/skills/gateguard/SKILL.md` — Fact-forcing gate that blocks Edit/Write/Bash (including MultiEdit) and demands concrete investigation (importers, data schemas, user instruction) before allowing the action. Measurably improves output quality by +2.25 points vs ungated agents.
+- Skill: `.claude/skills/generating-python-installer/SKILL.md` — Commercial-grade Python installer expert for Windows: Nuitka extreme compilation, dist slimming, DLL footprint analysis, and Inno Setup packaging to ship the smallest, fastest installers. Use only for advanced packaging/optimization (minimal size, fast startup), not basic script-to-exe conversion. 中文触发：Nuitka 极限优化、Python 商业打包、极限编译 Python、dist 瘦身、DLL 分析、最小安装包、最快启动、商业级打包风格
+- Skill: `.claude/skills/git-workflow/SKILL.md` — Git workflow patterns including branching strategies, commit conventions, merge vs rebase, conflict resolution, and collaborative development best practices for teams of all sizes.
+- Skill: `.claude/skills/github-ops/SKILL.md` — GitHub repository operations, automation, and management. Issue triage, PR management, CI/CD operations, release management, and security monitoring using the gh CLI. Use when the user wants to manage GitHub issues, PRs, CI status, releases, contributors, stale items, or any GitHub operational task beyond simple git commands.
+- Skill: `.claude/skills/golang-patterns/SKILL.md` — Idiomatic Go patterns, best practices, and conventions for building robust, efficient, and maintainable Go applications.
+- Skill: `.claude/skills/golang-testing/SKILL.md` — Go testing patterns including table-driven tests, subtests, benchmarks, fuzzing, and test coverage. Follows TDD methodology with idiomatic Go practices.
+- Skill: `.claude/skills/google-workspace-ops/SKILL.md` — Operate across Google Drive, Docs, Sheets, and Slides as one workflow surface for plans, trackers, decks, and shared documents. Use when the user needs to find, summarize, edit, migrate, or clean up Google Workspace assets without dropping to raw tool calls.
+- Skill: `.claude/skills/growth-log/SKILL.md` — Use after a complex task, failure, or when reviewing what was learned. Teaches how to write growth logs that extract reusable patterns — not diary entries.
+- Skill: `.claude/skills/healthcare-cdss-patterns/SKILL.md` — Clinical Decision Support System (CDSS) development patterns. Drug interaction checking, dose validation, clinical scoring (NEWS2, qSOFA), alert severity classification, and integration into EMR workflows.
+- Skill: `.claude/skills/healthcare-emr-patterns/SKILL.md` — EMR/EHR development patterns for healthcare applications. Clinical safety, encounter workflows, prescription generation, clinical decision support integration, and accessibility-first UI for medical data entry.
+- Skill: `.claude/skills/healthcare-eval-harness/SKILL.md` — Patient safety evaluation harness for healthcare application deployments. Automated test suites for CDSS accuracy, PHI exposure, clinical workflow integrity, and integration compliance. Blocks deployments on safety failures.
+- Skill: `.claude/skills/healthcare-phi-compliance/SKILL.md` — Protected Health Information (PHI) and Personally Identifiable Information (PII) compliance patterns for healthcare applications. Covers data classification, access control, audit trails, encryption, and common leak vectors.
+- Skill: `.claude/skills/hermes-imports/SKILL.md` — Convert local Hermes operator workflows into sanitized ECC skills and release-pack artifacts. Use when preparing a Hermes workflow for public ECC reuse without leaking private workspace state, credentials, or local-only paths.
+- Skill: `.claude/skills/hexagonal-architecture/SKILL.md` — Design, implement, and refactor Ports & Adapters systems with clear domain boundaries, dependency inversion, and testable use-case orchestration across TypeScript, Java, Kotlin, and Go services.
+- Skill: `.claude/skills/hipaa-compliance/SKILL.md` — HIPAA-specific entrypoint for healthcare privacy and security work. Use when a task is explicitly framed around HIPAA, PHI handling, covered entities, BAAs, breach posture, or US healthcare compliance requirements.
+- Skill: `.claude/skills/homelab-network-readiness/SKILL.md` — Readiness checklist for homelab VLAN segmentation, local DNS filtering, and WireGuard-style remote access before changing router, firewall, DHCP, or VPN configuration.
+- Skill: `.claude/skills/homelab-network-setup/SKILL.md` — Practical home and homelab network planning for gateways, switches, access points, IP ranges, DHCP reservations, DNS, cabling, and common beginner mistakes.
+- Skill: `.claude/skills/homelab-pihole-dns/SKILL.md` — Pi-hole installation, blocklist management, DNS-over-HTTPS setup, DHCP integration, local DNS records, and troubleshooting broken DNS resolution on a home network.
+- Skill: `.claude/skills/homelab-vlan-segmentation/SKILL.md` — Segmenting home networks into VLANs for IoT, guest, trusted, and server traffic using UniFi, pfSense/OPNsense, and MikroTik — including switch trunk config, firewall rules, and wireless SSID mapping.
+- Skill: `.claude/skills/homelab-wireguard-vpn/SKILL.md` — WireGuard VPN server setup, peer configuration, key generation, split tunneling vs full tunnel routing, and remote access to a home network from mobile and laptop clients.
+- Skill: `.claude/skills/hookify-rules/SKILL.md` — This skill should be used when the user asks to create a hookify rule, write a hook rule, configure hookify, add a hookify rule, or needs guidance on hookify rule syntax and patterns.
+- Skill: `.claude/skills/inherit-legacy-style/SKILL.md` — Legacy-project style inheritance skill. Use when the user types /inherit-legacy-style, or when onboarding an AI coding agent onto a hand-written legacy project and you need to prevent "style drift" (the model imposing its pretrained mainstream idioms onto the project). Language- and framework-agnostic — it aligns meta-architecture only, not syntax. Once run, it becomes a behavioral constraint on all subsequent coding tasks. Do NOT use for pure research or one-off questions unrelated to code-style alignment.
+- Skill: `.claude/skills/intent-driven-development/SKILL.md` — Turn ambiguous or high-impact product and engineering changes into scoped, verifiable acceptance criteria before or alongside implementation. Use when a user asks to clarify a feature, define acceptance criteria, de-risk a security/data/migration/integration change, prepare implementation requirements for another agent, or make a complex request testable. Do not trigger for trivial edits, straightforward fixes, active debugging, code review, or implementation requests whose acceptance conditions are already clear unless the user explicitly invokes this skill.
+- Skill: `.claude/skills/inventory-demand-planning/SKILL.md` — >
+- Skill: `.claude/skills/investor-materials/SKILL.md` — Create and update pitch decks, one-pagers, investor memos, accelerator applications, financial models, and fundraising materials. Use when the user needs investor-facing documents, projections, use-of-funds tables, milestone plans, or materials that must stay internally consistent across multiple fundraising assets.
+- Skill: `.claude/skills/investor-outreach/SKILL.md` — Draft cold emails, warm intro blurbs, follow-ups, update emails, and investor communications for fundraising. Use when the user wants outreach to angels, VCs, strategic investors, or accelerators and needs concise, personalized, investor-facing messaging.
+- Skill: `.claude/skills/ios-icon-gen/SKILL.md` — Generate iOS app icons as PNG imagesets for Xcode asset catalogs from SF Symbols (5000+ Apple-native) or Iconify API (275k+ open source icons from 200+ collections). Use when generating icons, creating icon assets, adding icons to asset catalog, or searching for icons for iOS projects.
+- Skill: `.claude/skills/iterative-retrieval/SKILL.md` — Pattern for progressively refining context retrieval to solve the subagent context problem
+- Skill: `.claude/skills/ito-basket-compare/SKILL.md` — Compare Itô prediction-market baskets against a user's knowledge base, portfolio notes, financial context, watchlist, or research thesis. Use for read-only basket comparison and gap analysis without investment advice or live trading.
+- Skill: `.claude/skills/ito-data-atlas-agent/SKILL.md` — Design background Data Atlas style agents for Itô basket research, market discovery, parameter drafting, and human-in-the-loop editing. Use for architecture and workflow planning, not live order execution.
+- Skill: `.claude/skills/ito-market-intelligence/SKILL.md` — Research prediction-market events, venues, underliers, liquidity, and news context for Itô basket workflows. Use for read-only market intelligence, API-gated Itô exploration, and source-grounded prediction-market briefings without investment advice or live trading.
+- Skill: `.claude/skills/ito-trade-planner/SKILL.md` — Build a non-advisory prediction-market trade planning worksheet for Itô or venue workflows. Use to inspect venues, underliers, constraints, order prerequisites, and manual execution steps without placing trades or recommending positions.
+- Skill: `.claude/skills/java-coding-standards/SKILL.md` — Java coding standards for Spring Boot and Quarkus services: naming, immutability, Optional usage, streams, exceptions, generics, CDI, reactive patterns, and project layout. Automatically applies framework-specific conventions.
+- Skill: `.claude/skills/jira-integration/SKILL.md` — Use this skill when retrieving Jira tickets, analyzing requirements, updating ticket status, adding comments, or transitioning issues. Provides Jira API patterns via MCP or direct REST calls.
+- Skill: `.claude/skills/jpa-patterns/SKILL.md` — JPA/Hibernate patterns for entity design, relationships, query optimization, transactions, auditing, indexing, pagination, and pooling in Spring Boot.
+- Skill: `.claude/skills/knowledge-ops/SKILL.md` — Knowledge base management, ingestion, sync, and retrieval across multiple storage layers (local files, MCP memory, vector stores, Git repos). Use when the user wants to save, organize, sync, deduplicate, or search across their knowledge systems.
+- Skill: `.claude/skills/kotlin-coroutines-flows/SKILL.md` — Kotlin Coroutines and Flow patterns for Android and KMP — structured concurrency, Flow operators, StateFlow, error handling, and testing.
+- Skill: `.claude/skills/kotlin-exposed-patterns/SKILL.md` — JetBrains Exposed ORM patterns including DSL queries, DAO pattern, transactions, HikariCP connection pooling, Flyway migrations, and repository pattern.
+- Skill: `.claude/skills/kotlin-ktor-patterns/SKILL.md` — Ktor server patterns including routing DSL, plugins, authentication, Koin DI, kotlinx.serialization, WebSockets, and testApplication testing.
+- Skill: `.claude/skills/kotlin-patterns/SKILL.md` — Idiomatic Kotlin patterns, best practices, and conventions for building robust, efficient, and maintainable Kotlin applications with coroutines, null safety, and DSL builders.
+- Skill: `.claude/skills/kotlin-testing/SKILL.md` — Kotlin testing patterns with Kotest, MockK, coroutine testing, property-based testing, and Kover coverage. Follows TDD methodology with idiomatic Kotlin practices.
+- Skill: `.claude/skills/kubernetes-patterns/SKILL.md` — Kubernetes workload patterns, resource management, RBAC, probes, autoscaling, ConfigMap/Secret handling, and kubectl debugging for production-grade deployments.
+- Skill: `.claude/skills/laravel-patterns/SKILL.md` — Laravel architecture patterns, routing/controllers, Eloquent ORM, service layers, queues, events, caching, and API resources for production apps.
+- Skill: `.claude/skills/laravel-plugin-discovery/SKILL.md` — Discover and evaluate Laravel packages via LaraPlugins.io MCP. Use when the user wants to find plugins, check package health, or assess Laravel/PHP compatibility.
+- Skill: `.claude/skills/laravel-security/SKILL.md` — Laravel security best practices — authentication, authorization, Eloquent safety, CSRF, XSS prevention, API security, and secure deployment configurations.
+- Skill: `.claude/skills/laravel-tdd/SKILL.md` — Laravel testing strategies with PHPUnit, Pest, model factories, HTTP tests, Sanctum authentication testing, mocking, and coverage.
+- Skill: `.claude/skills/laravel-verification/SKILL.md` — Verification loop for Laravel projects: env checks, linting, static analysis, tests with coverage, security scans, and deployment readiness.
+- Skill: `.claude/skills/latency-critical-systems/SKILL.md` — Use for latency-sensitive systems such as realtime dashboards, market data, streaming agents, execution gateways, queues, caches, or HFT-like infrastructure where freshness and p95 latency matter.
+- Skill: `.claude/skills/lead-intelligence/SKILL.md` — AI-native lead intelligence and outreach pipeline. Replaces Apollo, Clay, and ZoomInfo with agent-powered signal scoring, mutual ranking, warm path discovery, source-derived voice modeling, and channel-specific outreach across email, LinkedIn, and X. Use when the user wants to find, qualify, and reach high-value contacts.
+- Skill: `.claude/skills/liquid-glass-design/SKILL.md` — iOS 26 Liquid Glass design system — dynamic glass material with blur, reflection, and interactive morphing for SwiftUI, UIKit, and WidgetKit.
+- Skill: `.claude/skills/llm-trading-agent-security/SKILL.md` — Security patterns for autonomous trading agents with wallet or transaction authority. Covers prompt injection, spend limits, pre-send simulation, circuit breakers, MEV protection, and key handling.
+- Skill: `.claude/skills/logistics-exception-management/SKILL.md` — >
+- Skill: `.claude/skills/loop-design-check/SKILL.md` — Design a goal-oriented agent loop, and review it for the ways loops go wrong — spinning and burning tokens, Goodhart-gaming the verifier, or running a wrong answer to completion. Two actions: (1) WRITE a loop — gate whether to build it, define a machine-decidable goal, pick the loop type, pick a skeleton; (2) REVIEW a loop — run it past five failure modes plus decidability, boundaries, fallback, judge independence, and keep-judgment-with-the-human red lines. Use when designing an autonomous agent loop, or when you already have one and worry it will spin, cheat, or run a wrong answer to the end. Complements the mechanism-layer loop skills (autonomous-loops, continuous-agent-loop) by covering the judgment layer they don't. 中文触发：写 loop、设计 loop、做一个 loop、检查 loop 对不对、loop 体检、loop 会不会跑飞、可判定目标、五个崩法、plan build judge。English triggers: design an agent loop, write a loop, check a loop, loop review, prevent a runaway loop, goal-oriented loop, decidable goal, plan/build/judge.
+- Skill: `.claude/skills/mailtrap-email-integration/SKILL.md` — Guides agents through integrating transactional email sending via Mailtrap's Email API, including sandbox testing, domain verification, and API authentication. Use when implementing email-sending features, debugging delivery issues, or setting up safe dev/staging email testing.
+- Skill: `.claude/skills/make-interfaces-feel-better/SKILL.md` — Apply concrete design-engineering details that make interfaces feel polished. Use when reviewing or improving UI spacing, typography, borders, shadows, motion, hit areas, icons, text wrapping, and interaction states.
+- Skill: `.claude/skills/manim-video/SKILL.md` — Build reusable Manim explainers for technical concepts, graphs, system diagrams, and product walkthroughs, then hand off to the wider ECC video stack if needed. Use when the user wants a clean animated explainer rather than a generic talking-head script.
+- Skill: `.claude/skills/market-research/SKILL.md` — Conduct market research, competitive analysis, investor due diligence, and industry intelligence with source attribution and decision-oriented summaries. Use when the user wants market sizing, competitor comparisons, fund research, technology scans, or research that informs business decisions.
+- Skill: `.claude/skills/marketing-campaign/SKILL.md` — End-to-end marketing campaign planning and execution. Covers audience research, positioning, campaign angle definition, landing page copy, email sequences, social posts, ad copy, short-form video scripts, and content calendars. Use as the orchestration layer for multi-channel product launches.
+- Skill: `.claude/skills/mcp-server-patterns/SKILL.md` — Build MCP servers with Node/TypeScript SDK — tools, resources, prompts, Zod validation, stdio vs Streamable HTTP. Use Context7 or official MCP docs for latest API.
+- Skill: `.claude/skills/messages-ops/SKILL.md` — Evidence-first live messaging workflow for ECC. Use when the user wants to read texts or DMs, recover a recent one-time code, inspect a thread before replying, or prove which message source was actually checked.
+- Skill: `.claude/skills/ml-adoption-playbook/SKILL.md` — End-to-end methodology for AI agents and software engineers to add machine learning algorithms to existing non-ML codebases. Covers problem framing, data readiness, architectural decoupling, and baseline model integration.
+- Skill: `.claude/skills/mle-workflow/SKILL.md` — Production machine-learning engineering workflow for data contracts, reproducible training, model evaluation, deployment, monitoring, and rollback. Use when building, reviewing, or hardening ML systems beyond one-off notebooks.
+- Skill: `.claude/skills/motion-advanced/SKILL.md` — Advanced motion patterns for React / Next.js — drag & drop, gestures, text animations, SVG path drawing, custom hooks, imperative sequences (useAnimate), loaders, and the full API decision tree. Requires motion-foundations.
+- Skill: `.claude/skills/motion-foundations/SKILL.md` — Motion tokens, spring presets, performance rules, device adaptation, accessibility enforcement, and SSR safety for React / Next.js using motion/react. Foundation layer — all other motion skills depend on this.
+- Skill: `.claude/skills/motion-patterns/SKILL.md` — Production-ready animation patterns for React / Next.js — button, modal, toast, stagger, page transitions, exit animations, scroll, and layout — built on motion-foundations tokens and springs.
+- Skill: `.claude/skills/motion-ui/SKILL.md` — Production-ready UI motion system for React/Next.js. Use when implementing animations, transitions, or motion patterns.
+- Skill: `.claude/skills/mysql-patterns/SKILL.md` — MySQL and MariaDB schema, query, indexing, transaction, replication, and connection-pool patterns for production backends.
+- Skill: `.claude/skills/nanoclaw-repl/SKILL.md` — Operate and extend NanoClaw v2, ECC's zero-dependency session-aware REPL built on claude -p.
+- Skill: `.claude/skills/nestjs-patterns/SKILL.md` — NestJS architecture patterns for modules, controllers, providers, DTO validation, guards, interceptors, config, and production-grade TypeScript backends.
+- Skill: `.claude/skills/netmiko-ssh-automation/SKILL.md` — Safe Python Netmiko patterns for read-only collection, bounded batch SSH, TextFSM parsing, guarded config changes, timeouts, and network automation error handling.
+- Skill: `.claude/skills/network-bgp-diagnostics/SKILL.md` — Diagnostics-only BGP troubleshooting patterns for neighbor state, route exchange, prefix policy, AS path inspection, and safe evidence collection.
+- Skill: `.claude/skills/network-config-validation/SKILL.md` — Pre-deployment checks for router and switch configuration, including dangerous commands, duplicate addresses, subnet overlaps, stale references, management-plane risk, and IOS-style security hygiene.
+- Skill: `.claude/skills/network-interface-health/SKILL.md` — Diagnose interface errors, drops, CRCs, duplex mismatches, flapping, speed negotiation issues, and counter trends on routers, switches, and Linux hosts.
+- Skill: `.claude/skills/nextjs-turbopack/SKILL.md` — Next.js 16+ and Turbopack — incremental bundling, FS caching, dev speed, and when to use Turbopack vs webpack.
+- Skill: `.claude/skills/nodejs-keccak256/SKILL.md` — Prevent Ethereum hashing bugs in JavaScript and TypeScript. Node's sha3-256 is NIST SHA3, not Ethereum Keccak-256, and silently breaks selectors, signatures, storage slots, and address derivation.
+- Skill: `.claude/skills/nutrient-document-processing/SKILL.md` — Process, convert, OCR, extract, redact, sign, and fill documents using the Nutrient DWS API. Works with PDFs, DOCX, XLSX, PPTX, HTML, and images.
+- Skill: `.claude/skills/nuxt4-patterns/SKILL.md` — Nuxt 4 app patterns for hydration safety, performance, route rules, lazy loading, and SSR-safe data fetching with useFetch and useAsyncData.
+- Skill: `.claude/skills/openclaw-persona-forge/SKILL.md` — 为 OpenClaw AI Agent 锻造完整的龙虾灵魂方案。根据用户偏好或随机抽卡， 输出身份定位、灵魂描述(SOUL.md)、角色化底线规则、名字和头像生图提示词。 如当前环境提供已审核的生图 skill，可自动生成统一风格头像图片。 当用户需要创建、设计或定制 OpenClaw 龙虾灵魂时使用。 不适用于：微调已有 SOUL.md、非 OpenClaw 平台的角色设计、纯工具型无性格 Agent。 触发词：龙虾灵魂、虾魂、OpenClaw 灵魂、养虾灵魂、龙虾角色、龙虾定位、 龙虾剧本杀角色、龙虾游戏角色、龙虾 NPC、龙虾性格、龙虾背景故事、 lobster soul、lobster character、抽卡、随机龙虾、龙虾 SOUL、gacha。
+- Skill: `.claude/skills/opensource-pipeline/SKILL.md` — Open-source pipeline: fork, sanitize, and package private projects for safe public release. Chains 3 agents (forker, sanitizer, packager). Triggers: '/opensource', 'open source this', 'make this public', 'prepare for open source'.
+- Skill: `.claude/skills/orch-add-feature/SKILL.md` — Orchestrate building a brand-new feature end to end — research, plan, TDD implementation, review, and gated commit — by delegating each phase to the matching ECC agent. Use when adding a capability that does not exist yet.
+- Skill: `.claude/skills/orch-build-mvp/SKILL.md` — Orchestrate bootstrapping a working MVP from a design or spec document — ingest the doc, plan thin vertical slices, scaffold the first end-to-end slice, then TDD-implement, review, and gated commit. Use to turn an SDD/PRD into a running starting point.
+- Skill: `.claude/skills/orch-change-feature/SKILL.md` — Orchestrate altering an existing, working feature to new desired behavior — update its tests to the new spec, change the implementation to match, review, and gated commit. Use when behavior is not broken but should be different.
+- Skill: `.claude/skills/orch-fix-defect/SKILL.md` — Orchestrate fixing a bug — reproduce it as a failing regression test, fix to green, review, and gated commit — by delegating each phase to the matching ECC agent. Use when existing behavior is broken or wrong.
+- Skill: `.claude/skills/orch-pipeline/SKILL.md` — Shared orchestration engine for the orch-* skill family. Defines the gated Research-Plan-TDD-Review-Commit pipeline, the size classifier, the agent map, and the two human gates that the orch-* operation skills delegate to. Not usually invoked directly.
+- Skill: `.claude/skills/orch-refine-code/SKILL.md` — Orchestrate a behavior-preserving refactor — confirm tests are green, restructure without changing behavior, keep tests green, review, and gated commit. Use when the structure should improve but behavior must not change.
+- Skill: `.claude/skills/parallel-execution-optimizer/SKILL.md` — Use when the user wants a task done much faster through parallel work, concurrent agents, batched tool calls, isolated worktrees, or many independent verification lanes without losing correctness.
+- Skill: `.claude/skills/perl-patterns/SKILL.md` — Modern Perl 5.36+ idioms, best practices, and conventions for building robust, maintainable Perl applications.
+- Skill: `.claude/skills/perl-security/SKILL.md` — Comprehensive Perl security covering taint mode, input validation, safe process execution, DBI parameterized queries, web security (XSS/SQLi/CSRF), and perlcritic security policies.
+- Skill: `.claude/skills/perl-testing/SKILL.md` — Perl testing patterns using Test2::V0, Test::More, prove runner, mocking, coverage with Devel::Cover, and TDD methodology.
+- Skill: `.claude/skills/plan-canvas/SKILL.md` — Open plans and HTML artifacts in a local browser canvas where the human annotates elements, chats, and approves or requests changes without leaving the page. Use when presenting a plan for review, or when feedback like "move this, change that" is easier pointed at than typed.
+- Skill: `.claude/skills/plan-orchestrate/SKILL.md` — Read a plan document, decompose it into steps, design a per-step agent chain from the ECC catalogue, and emit ready-to-paste /orchestrate custom prompts. Generative only — never invokes /orchestrate itself. Use when the user has a multi-step plan and wants to drive it through orchestrate without composing chains by hand.
+- Skill: `.claude/skills/plankton-code-quality/SKILL.md` — Write-time code quality enforcement using Plankton — auto-formatting, linting, and Claude-powered fixes on every file edit via hooks.
+- Skill: `.claude/skills/postgres-patterns/SKILL.md` — PostgreSQL database patterns for query optimization, schema design, indexing, and security. Based on Supabase best practices.
+- Skill: `.claude/skills/prediction-market-oracle-research/SKILL.md` — Research prediction markets as data sources or oracle signals for products, agents, dashboards, and corporate decision intelligence. Use for source-grounded analysis of market-implied probabilities, caveats, and integration patterns without investment advice.
+- Skill: `.claude/skills/prediction-market-risk-review/SKILL.md` — Review prediction-market, basket, oracle, and trading-agent workflows for compliance, safety, data-quality, privacy, and execution risk. Use before any workflow handles venue auth, user portfolio data, API keys, or trade planning.
+- Skill: `.claude/skills/prisma-patterns/SKILL.md` — Prisma ORM patterns for TypeScript backends — schema design, query optimization, transactions, pagination, and critical traps like updateMany returning count not records, $transaction timeouts, migrate dev resetting the DB, @updatedAt skipped on bulk writes, and serverless connection exhaustion.
+- Skill: `.claude/skills/product-capability/SKILL.md` — Translate PRD intent, roadmap asks, or product discussions into an implementation-ready capability plan that exposes constraints, invariants, interfaces, and unresolved decisions before multi-service work starts. Use when the user needs an ECC-native PRD-to-SRS lane instead of vague planning prose.
+- Skill: `.claude/skills/product-lens/SKILL.md` — Use this skill to validate the "why" before building, run product diagnostics, and pressure-test product direction before the request becomes an implementation contract.
+- Skill: `.claude/skills/production-audit/SKILL.md` — Local-evidence production readiness audit for shipped apps, pre-launch reviews, post-merge checks, and "what breaks in prod?" questions without sending repo data to an external audit service.
+- Skill: `.claude/skills/production-scheduling/SKILL.md` — >
+- Skill: `.claude/skills/project-flow-ops/SKILL.md` — Operate execution flow across GitHub and Linear by triaging issues and pull requests, linking active work, and keeping GitHub public-facing while Linear remains the internal execution layer. Use when the user wants backlog control, PR triage, or GitHub-to-Linear coordination.
+- Skill: `.claude/skills/prompt-optimizer/SKILL.md` — >-
+- Skill: `.claude/skills/python-patterns/SKILL.md` — Pythonic idioms, PEP 8 standards, type hints, and best practices for building robust, efficient, and maintainable Python applications.
+- Skill: `.claude/skills/python-testing/SKILL.md` — Python testing strategies using pytest, TDD methodology, fixtures, mocking, parametrization, and coverage requirements.
+- Skill: `.claude/skills/pytorch-patterns/SKILL.md` — PyTorch deep learning patterns and best practices for building robust, efficient, and reproducible training pipelines, model architectures, and data loading.
+- Skill: `.claude/skills/quality-nonconformance/SKILL.md` — >
+- Skill: `.claude/skills/quarkus-patterns/SKILL.md` — Quarkus 3.x LTS architecture patterns with Camel for messaging, RESTful API design, CDI services, data access with Panache, and async processing. Use for Java Quarkus backend work with event-driven architectures.
+- Skill: `.claude/skills/quarkus-security/SKILL.md` — Quarkus Security best practices for authentication, authorization, JWT/OIDC, RBAC, input validation, CSRF, secrets management, and dependency security.
+- Skill: `.claude/skills/quarkus-tdd/SKILL.md` — Test-driven development for Quarkus 3.x LTS using JUnit 5, Mockito, REST Assured, Camel testing, and JaCoCo. Use when adding features, fixing bugs, or refactoring event-driven services.
+- Skill: `.claude/skills/quarkus-verification/SKILL.md` — Verification loop for Quarkus projects: build, static analysis, tests with coverage, security scans, native compilation, and diff review before release or PR.
+- Skill: `.claude/skills/ralphinho-rfc-pipeline/SKILL.md` — RFC-driven multi-agent DAG execution pattern with quality gates, merge queues, and work unit orchestration.
+- Skill: `.claude/skills/react-native-patterns/SKILL.md` — React Native and Expo app patterns — Expo Router navigation, state separation (server/client/route/form), TanStack Query data fetching with Zod, performant lists, NativeWind/StyleSheet styling, native APIs, and secure storage. Use when building or editing React Native / Expo screens, components, navigation, or data layers.
+- Skill: `.claude/skills/react-patterns/SKILL.md` — React 18/19 patterns including hooks discipline, server/client component boundaries, Suspense + error boundaries, form actions, data fetching, state management decision trees, and accessibility-first composition. Use when writing or reviewing React components.
+- Skill: `.claude/skills/react-performance/SKILL.md` — React and Next.js performance optimization patterns adapted from Vercel Engineering's React Best Practices (https://github.com/vercel-labs/agent-skills). Organizes 70+ rules across 8 priority categories — waterfalls, bundle size, server-side, client fetching, re-render, rendering, JS micro-perf, advanced. Use when writing, reviewing, or refactoring React/Next.js code for performance.
+- Skill: `.claude/skills/react-testing/SKILL.md` — React component testing with React Testing Library, Vitest/Jest, MSW for network mocking, accessibility assertions with axe, and the decision boundary between component tests and Playwright/Cypress end-to-end runs. Use when writing or fixing tests for React components, hooks, or pages.
+- Skill: `.claude/skills/recsys-pipeline-architect/SKILL.md` — Design composable recommendation, ranking, and feed pipelines using the six-stage Source→Hydrator→Filter→Scorer→Selector→SideEffect framework popularized by xAI's open-sourced For You algorithm. Use this skill whenever the user is building any system that picks "the top K items for a (user, context)" — social feeds, content CMSs, RAG rerankers, task prioritizers, notification triage, search reranking, ad ranking.
+- Skill: `.claude/skills/recursive-decision-ledger/SKILL.md` — Use when the user asks for repeated rollouts, marked decision processes, high-dimensional search, stochastic optimization, local-optima exploration, ensemble comparison, or recursive reasoning with a visible evidence trail.
+- Skill: `.claude/skills/redis-patterns/SKILL.md` — Redis data structure patterns, caching strategies, distributed locks, rate limiting, pub/sub, and connection management for production applications.
+- Skill: `.claude/skills/regex-vs-llm-structured-text/SKILL.md` — Decision framework for choosing between regex and LLM when parsing structured text — start with regex, add LLM only for low-confidence edge cases.
+- Skill: `.claude/skills/remotion-video-creation/SKILL.md` — Best practices for Remotion - Video creation in React. 29 domain-specific rules covering 3D, animations, audio, captions, charts, transitions, and more.
+- Skill: `.claude/skills/repo-scan/SKILL.md` — Cross-stack source code asset audit — classifies every file, detects embedded third-party libraries, and delivers actionable four-level verdicts per module with interactive HTML reports.
+- Skill: `.claude/skills/research-ops/SKILL.md` — Evidence-first current-state research workflow for ECC. Use when the user wants fresh facts, comparisons, enrichment, or a recommendation built from current public evidence and any supplied local context.
+- Skill: `.claude/skills/returns-reverse-logistics/SKILL.md` — >
+- Skill: `.claude/skills/rules-distill/SKILL.md` — Scan skills to extract cross-cutting principles and distill them into rules — append, revise, or create new rule files
+- Skill: `.claude/skills/rust-patterns/SKILL.md` — Idiomatic Rust patterns, ownership, error handling, traits, concurrency, and best practices for building safe, performant applications.
+- Skill: `.claude/skills/rust-testing/SKILL.md` — Rust testing patterns including unit tests, integration tests, async testing, property-based testing, mocking, and coverage. Follows TDD methodology.
+- Skill: `.claude/skills/safety-guard/SKILL.md` — Use this skill to prevent destructive operations when working on production systems or running agents autonomously.
+- Skill: `.claude/skills/santa-method/SKILL.md` — Multi-agent adversarial verification with convergence loop. Two independent review agents must both pass before output ships.
+- Skill: `.claude/skills/pubmed-database/SKILL.md` — Direct PubMed and NCBI E-utilities search workflows for biomedical literature, MeSH queries, PMID lookup, citation retrieval, and API-backed literature monitoring.
+- Skill: `.claude/skills/uspto-database/SKILL.md` — USPTO patent and trademark data workflow for official record lookup, PatentSearch queries, TSDR checks, assignment data, and reproducible IP research logs.
+- Skill: `.claude/skills/gget/SKILL.md` — gget CLI and Python workflow for quick genomic database queries, sequence lookup, BLAST-style searches, enrichment checks, and reproducible bioinformatics evidence logs.
+- Skill: `.claude/skills/literature-review/SKILL.md` — Systematic literature-review workflow for academic, biomedical, technical, and scientific topics, including search planning, source screening, synthesis, citation checks, and evidence logging.
+- Skill: `.claude/skills/scholar-evaluation/SKILL.md` — Structured scholarly-work evaluation for papers, proposals, literature reviews, methods sections, evidence quality, citation support, and research-writing feedback.
+- Skill: `.claude/skills/search-first/SKILL.md` — Research-before-coding workflow. Search for existing tools, libraries, and patterns before writing custom code. Invokes the researcher agent.
+- Skill: `.claude/skills/security-bounty-hunter/SKILL.md` — Hunt for exploitable, bounty-worthy security issues in repositories. Focuses on remotely reachable vulnerabilities that qualify for real reports instead of noisy local-only findings.
+- Skill: `.claude/skills/security-review/SKILL.md` — Use this skill when adding authentication, handling user input, working with secrets, creating API endpoints, or implementing payment/sensitive features. Provides comprehensive security checklist and patterns.
+- Skill: `.claude/skills/security-scan/SKILL.md` — Scan your Claude Code configuration (.claude/ directory) for security vulnerabilities, misconfigurations, and injection risks using AgentShield. Checks CLAUDE.md, settings.json, MCP servers, hooks, and agent definitions.
+- Skill: `.claude/skills/seo/SKILL.md` — Audit, plan, and implement SEO improvements across technical SEO, on-page optimization, structured data, Core Web Vitals, and content strategy. Use when the user wants better search visibility, SEO remediation, schema markup, sitemap/robots work, or keyword mapping.
+- Skill: `.claude/skills/skill-comply/SKILL.md` — Visualize whether skills, rules, and agent definitions are actually followed — auto-generates scenarios at 3 prompt strictness levels, runs agents, classifies behavioral sequences, and reports compliance rates with full tool call timelines
+- Skill: `.claude/skills/skill-scout/SKILL.md` — Search existing local, marketplace, GitHub, and web skill sources before creating a new skill. Use when the user wants to create, build, fork, or find a skill for a workflow.
+- Skill: `.claude/skills/skill-stocktake/SKILL.md` — Use when auditing Claude skills and commands for quality. Supports Quick Scan (changed skills only) and Full Stocktake modes with sequential subagent batch evaluation.
+- Skill: `.claude/skills/social-graph-ranker/SKILL.md` — Weighted social-graph ranking for warm intro discovery, bridge scoring, and network gap analysis across X and LinkedIn. Use when the user wants the reusable graph-ranking engine itself, not the broader outreach or network-maintenance workflow layered on top of it.
+- Skill: `.claude/skills/social-publisher/SKILL.md` — Agent-driven scheduling and publishing of social media posts across 13 platforms via SocialClaw. Use when the user wants to publish to X, LinkedIn, Instagram, Facebook Pages, TikTok, Discord, Telegram, YouTube, Reddit, WordPress, or Pinterest — or when managing campaigns, uploading media, or monitoring post delivery status.
+- Skill: `.claude/skills/springboot-patterns/SKILL.md` — Spring Boot architecture patterns, REST API design, layered services, data access, caching, async processing, and logging. Use for Java Spring Boot backend work.
+- Skill: `.claude/skills/springboot-security/SKILL.md` — Spring Security best practices for authn/authz, validation, CSRF, secrets, headers, rate limiting, and dependency security in Java Spring Boot services.
+- Skill: `.claude/skills/springboot-tdd/SKILL.md` — Test-driven development for Spring Boot using JUnit 5, Mockito, MockMvc, Testcontainers, and JaCoCo. Use when adding features, fixing bugs, or refactoring.
+- Skill: `.claude/skills/springboot-verification/SKILL.md` — Verification loop for Spring Boot projects: build, static analysis, tests with coverage, security scans, and diff review before release or PR.
+- Skill: `.claude/skills/strategic-compact/SKILL.md` — Suggests manual context compaction at logical intervals to preserve context through task phases rather than arbitrary auto-compaction.
+- Skill: `.claude/skills/swift-actor-persistence/SKILL.md` — Thread-safe data persistence in Swift using actors — in-memory cache with file-backed storage, eliminating data races by design.
+- Skill: `.claude/skills/swift-concurrency-6-2/SKILL.md` — Swift 6.2 Approachable Concurrency — single-threaded by default, @concurrent for explicit background offloading, isolated conformances for main actor types.
+- Skill: `.claude/skills/swift-protocol-di-testing/SKILL.md` — Protocol-based dependency injection for testable Swift code — mock file system, network, and external APIs using focused protocols and Swift Testing.
+- Skill: `.claude/skills/swiftui-patterns/SKILL.md` — SwiftUI architecture patterns, state management with @Observable, view composition, navigation, performance optimization, and modern iOS/macOS UI best practices.
+- Skill: `.claude/skills/taste/SKILL.md` — A creative-direction (taste) layer for music videos and short-form edits in the angelcore / cloud-trance / hyperpop visual family. Distills a named-genre aesthetic vocabulary, a mood + color + light system, and a beat-synced editing grammar, then chains ECC's video skills (video-editing, fal-ai-media, remotion-video-creation, motion-*, content-engine) into one production pipeline. Use when the work is not just making a video function but making it feel intentional, when building a music video, a fancam/edit, a moodboard-driven reel, or when choosing a coherent visual direction for AI-generated b-roll.
+- Skill: `.claude/skills/tdd-workflow/SKILL.md` — Use this skill when writing new features, fixing bugs, or refactoring code. Enforces test-driven development with 80%+ coverage including unit, integration, and E2E tests.
+- Skill: `.claude/skills/team-agent-orchestration/SKILL.md` — Run team-based orchestration for agent squads using work items, ownership, agent Kanban, merge gates, and control pane handoffs.
+- Skill: `.claude/skills/team-builder/SKILL.md` — Interactive agent picker for composing and dispatching parallel teams
+- Skill: `.claude/skills/terminal-ops/SKILL.md` — Evidence-first repo execution workflow for ECC. Use when the user wants a command run, a repo checked, a CI failure debugged, or a narrow fix pushed with exact proof of what was executed and verified.
+- Skill: `.claude/skills/tinystruct-patterns/SKILL.md` — Expert guidance for developing with the tinystruct Java framework. Use when working on the tinystruct codebase or any project built on tinystruct — including creating Application classes, @Action-mapped routes, unit tests, ActionRegistry, HTTP/CLI dual-mode handling, the built-in HTTP server, the event system, JSON with Builder/Builders, database persistence with AbstractData, POJO generation, Server-Sent Events (SSE), file uploads, and outbound HTTP networking.
+- Skill: `.claude/skills/token-budget-advisor/SKILL.md` — >-
+- Skill: `.claude/skills/ui-demo/SKILL.md` — Record polished UI demo videos using Playwright. Use when the user asks to create a demo, walkthrough, screen recording, or tutorial video of a web application. Produces WebM videos with visible cursor, natural pacing, and professional feel.
+- Skill: `.claude/skills/ui-to-vue/SKILL.md` — Use when the user has UI screenshots or design exports that need batch conversion into Vue 3 components, especially with Vant, Element Plus, or Ant Design Vue.
+- Skill: `.claude/skills/uncloud/SKILL.md` — Use when managing an Uncloud cluster — deploying services, configuring Caddy ingress, adding static proxy routes for non-cluster devices, publishing ports, scaling, inspecting logs, or managing machines and volumes with the `uc` CLI.
+- Skill: `.claude/skills/unified-notifications-ops/SKILL.md` — Operate notifications as one ECC-native workflow across GitHub, Linear, desktop alerts, hooks, and connected communication surfaces. Use when the real problem is alert routing, deduplication, escalation, or inbox collapse.
+- Skill: `.claude/skills/verification-loop/SKILL.md` — A comprehensive verification system for Claude Code sessions.
+- Skill: `.claude/skills/video-editing/SKILL.md` — AI-assisted video editing workflows for cutting, structuring, and augmenting real footage. Covers the full pipeline from raw capture through FFmpeg, Remotion, ElevenLabs, fal.ai, and final polish in Descript or CapCut. Use when the user wants to edit video, cut footage, create vlogs, or build video content.
+- Skill: `.claude/skills/videodb/SKILL.md` — See, Understand, Act on video and audio. See- ingest from local files, URLs, RTSP/live feeds, or live record desktop; return realtime context and playable stream links. Understand- extract frames, build visual/semantic/temporal indexes, and search moments with timestamps and auto-clips. Act- transcode and normalize (codec, fps, resolution, aspect ratio), perform timeline edits (subtitles, text/image overlays, branding, audio overlays, dubbing, translation), generate media assets (image, audio, video), and create real time alerts for events from live streams or desktop capture.
+- Skill: `.claude/skills/visa-doc-translate/SKILL.md` — Translate visa application documents (images) to English and create a bilingual PDF with original and translation
+- Skill: `.claude/skills/vite-patterns/SKILL.md` — Vite build tool patterns including config, plugins, HMR, env variables, proxy setup, SSR, library mode, dependency pre-bundling, and build optimization. Activate when working with vite.config.ts, Vite plugins, or Vite-based projects.
+- Skill: `.claude/skills/vue-patterns/SKILL.md` — Vue.js 3 Composition API patterns, component architecture, reactivity best practices, Pinia state management, Vue Router navigation, and Nuxt SSR patterns. Activates for Vue, Nuxt, Vite, or Pinia projects.
+- Skill: `.claude/skills/windows-desktop-e2e/SKILL.md` — E2E testing for Windows native desktop apps (WPF, WinForms, Win32/MFC, Qt) using pywinauto and Windows UI Automation.
+- Skill: `.claude/skills/workspace-surface-audit/SKILL.md` — Audit the active repo, MCP servers, plugins, connectors, env surfaces, and harness setup, then recommend the highest-value ECC-native skills, hooks, agents, and operator workflows. Use when the user wants help setting up Claude Code or understanding what capabilities are actually available in their environment.
+- Skill: `.claude/skills/x-api/SKILL.md` — X/Twitter API integration for posting tweets, threads, reading timelines, search, and analytics. Covers OAuth auth patterns, rate limits, and platform-native content posting. Use when the user wants to interact with X programmatically.

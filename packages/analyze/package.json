@@ -1,6 +1,6 @@
 {
   "name": "@baselane/analyze",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "type": "module",
   "description": "Static repo analysis (languages, frameworks, commands, conventions) that powers the baselane CLI's audit and pack rendering.",
   "main": "./src/index.ts",

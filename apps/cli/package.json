@@ -1,6 +1,6 @@
 {
   "name": "baselane",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "type": "module",
   "description": "Git-native package manager for AI coding harnesses — audit a repo, apply workflow packs, and keep agent config in sync.",
   "main": "./src/index.ts",

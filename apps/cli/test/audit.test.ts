@@ -15,6 +15,7 @@ describe("auditRepo", () => {
       "disciplined-workflow",
       "frontend-design",
       "frontend-taste",
+      "full-harness",
       "go-rules",
       "python-rules",
       "second-brain",
