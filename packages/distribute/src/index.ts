@@ -17,3 +17,5 @@ export {
   resolveGitSource, resolveRefSha, resolveDefaultBranch,
 } from "./git-source.ts";
 export type { GitSourceRef, ResolvedGitSource, InstallRef } from "./git-source.ts";
+export { resolveWellKnownSource, assertPublicHttpsUrl, isBlockedAddress } from "./well-known.ts";
+export type { ResolvedWellKnown, DnsLookup } from "./well-known.ts";

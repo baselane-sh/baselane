@@ -80,6 +80,31 @@ describe("resolveManifestPacks", () => {
     const skills = r.packs["github:o/r"].skills ?? [];
     expect(skills.map((s) => s.name)).toEqual(["tdd"]);
   });
+
+  it("resolves a docs: well-known pin into a validated pack and re-verifies the index sha", async () => {
+    const { createHash } = await import("node:crypto");
+    const digest = createHash("sha256").update(SKILL, "utf8").digest("hex");
+    const index = JSON.stringify({
+      $schema: "https://schemas.agentskills.io/discovery/0.2.0/schema.json",
+      skills: [{ name: "tdd", type: "skill-md", description: "d", url: "https://docs.acme.dev/tdd.md", digest }],
+    });
+    const indexSha = createHash("sha256").update(index, "utf8").digest("hex");
+    const routes = {
+      "https://docs.acme.dev/.well-known/agent-skills/index.json": () => new Response(index),
+      "https://docs.acme.dev/tdd.md": () => new Response(SKILL),
+    };
+    const lookupImpl = async () => ({ address: "93.184.216.34" });
+    // pin = the index sha (what runInstall would have written)
+    const manifest = validateManifest({ version: 1, target: { kind: "repo", id: "r" }, packs: { "docs:https://docs.acme.dev": indexSha } });
+    const r = await resolveManifestPacks(manifest, { fetchImpl: fakeFetch(routes), lookupImpl });
+    const pack = r.packs["docs:https://docs.acme.dev"];
+    expect((pack.skills ?? []).map((s) => s.name)).toEqual(["tdd"]);
+    expect(r.resolutions["docs:https://docs.acme.dev"].sha).toBe(indexSha);
+
+    // A stale pin (upstream changed) must hard-fail, not resolve silently.
+    const stale = validateManifest({ version: 1, target: { kind: "repo", id: "r" }, packs: { "docs:https://docs.acme.dev": "f".repeat(64) } });
+    await expect(resolveManifestPacks(stale, { fetchImpl: fakeFetch(routes), lookupImpl })).rejects.toThrow(/integrity check failed|docs changed/);
+  });
 });
 
 describe("resolveManifestPacks — registry-scoped names", () => {

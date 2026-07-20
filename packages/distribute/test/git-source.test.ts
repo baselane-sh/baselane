@@ -81,6 +81,15 @@ describe("parseInstallRef", () => {
     expect(() => parseInstallRef("owner/repo")).toThrow(/github:owner\/repo@<ref>/);
     expect(() => parseInstallRef("owner/repo")).toThrow(/owner\/repo@<skill>/);
   });
+
+  it("parses docs: well-known refs (https only) and wins over the bare owner/repo branch", () => {
+    expect(parseInstallRef("docs:https://docs.stripe.com")).toEqual({ kind: "docs", url: "https://docs.stripe.com" });
+    // A path with slashes must not be mis-parsed as owner/repo.
+    expect(parseInstallRef("docs:https://acme.dev/guides/x")).toEqual({ kind: "docs", url: "https://acme.dev/guides/x" });
+    expect(() => parseInstallRef("docs:http://docs.stripe.com")).toThrow(/must be https/);
+    expect(() => parseInstallRef("docs:ftp://x.com")).toThrow(/must be https/);
+    expect(() => parseInstallRef("docs:not a url")).toThrow(/not a valid docs URL/);
+  });
 });
 
 describe("resolveDefaultBranch", () => {

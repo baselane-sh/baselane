@@ -1,5 +1,5 @@
 import { packFromFileset, validatePack, type HarnessManifest, type Resolution, type WorkflowPack } from "@baselane/packs";
-import { isGitSourceName, parseGitSourceName, resolveGitSource } from "@baselane/distribute";
+import { isGitSourceName, parseGitSourceName, resolveGitSource, resolveWellKnownSource, type DnsLookup } from "@baselane/distribute";
 
 export interface ResolvedManifestPacks {
   packs: Record<string, WorkflowPack>;
@@ -114,7 +114,7 @@ export async function resolveManifestPacks(
   manifest: HarnessManifest,
   opts: {
     token?: string; fetchImpl?: typeof fetch; onNotice?: (m: string) => void;
-    inlinePacks?: Record<string, WorkflowPack>; registryBase?: string;
+    inlinePacks?: Record<string, WorkflowPack>; registryBase?: string; lookupImpl?: DnsLookup;
   } = {},
 ): Promise<ResolvedManifestPacks> {
   const packs: Record<string, WorkflowPack> = {};
@@ -125,6 +125,18 @@ export async function resolveManifestPacks(
     const inline = opts.inlinePacks?.[name];
     if (inline !== undefined) {
       packs[name] = validatePack(inline);
+      continue;
+    }
+    if (name.startsWith("docs:")) {
+      // Well-known agent-skills source. `pin` is the sha256 of the host's index.json; the resolver
+      // re-fetches and re-verifies (index sha against the pin, each artifact against its digest) or
+      // hard-fails on drift/tamper. Reuses packFromFileset for validation.
+      const url = name.slice("docs:".length);
+      const { indexSha, files } = await resolveWellKnownSource({ url, pin, fetchImpl: opts.fetchImpl, onNotice: opts.onNotice, lookupImpl: opts.lookupImpl });
+      const host = new URL(url).hostname;
+      const result = await packFromFileset(files, { repoName: host, ref: "well-known", sha: indexSha });
+      packs[name] = result.pack;
+      resolutions[name] = { ref: pin, sha: indexSha, packId: result.pack.id };
       continue;
     }
     if (isGitSourceName(name)) {

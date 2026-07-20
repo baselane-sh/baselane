@@ -4,7 +4,7 @@ import {
   buildManifest, materializeHarness, ENTRY_FILES, LEGACY_MANIFEST_PATH, MANIFEST_PATH,
   type HarnessManifest, type WorkflowPack,
 } from "@baselane/packs";
-import { parseInstallRef, resolveDefaultBranch } from "@baselane/distribute";
+import { parseInstallRef, resolveDefaultBranch, resolveWellKnownSource } from "@baselane/distribute";
 import { applyPlan, readCurrent } from "./fs-ops.ts";
 import { planReconcile } from "./plan.ts";
 import { mergeBaselaneHooks, SettingsParseError } from "./settings-merge.ts";
@@ -113,6 +113,11 @@ export async function runInstall(opts: InstallOptions): Promise<InstallReport> {
     const parsed = parseInstallRef(opts.source);
     if (parsed.kind === "git") {
       manifest = { ...base, packs: { ...base.packs, [parsed.name]: parsed.ref } };
+    } else if (parsed.kind === "docs") {
+      // Resolve once to fix the pin = sha256 of the host's well-known index.json; installFromManifest
+      // then re-resolves and re-verifies against it (index sha + per-artifact digests).
+      const { indexSha } = await resolveWellKnownSource({ url: parsed.url, fetchImpl: opts.fetchImpl, onNotice: log });
+      manifest = { ...base, packs: { ...base.packs, [`docs:${parsed.url}`]: indexSha } };
     } else if (parsed.kind === "registry") {
       const registryBase = base.registry ?? opts.registryBase ?? DEFAULT_REGISTRY;
       let version = parsed.version;

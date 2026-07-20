@@ -53,7 +53,8 @@ const BARE_OWNER_REPO_RE = /^([A-Za-z0-9._-]+)\/([A-Za-z0-9._-]+)$/;
 export type InstallRef =
   | { kind: "git"; name: string; ref: string }
   | { kind: "registry"; name: string; version: string | null }
-  | { kind: "skill"; owner: string; repo: string; skill: string };
+  | { kind: "skill"; owner: string; repo: string; skill: string }
+  | { kind: "docs"; url: string };
 
 /**
  * Parses a `baselane install <ref>` (or manifest-add) argument into one of three forms:
@@ -63,10 +64,25 @@ export type InstallRef =
  *    `version` is `null` when the version was omitted (caller resolves "latest").
  *  - `owner/repo@skill` (bare, no `github:` prefix) → `{kind:"skill", owner, repo, skill}` — the
  *    npx-skills addressing convention: install ONE named skill from a repo at its default branch.
+ *  - `docs:https://host/...` → `{kind:"docs", url}` — install skills the host publishes at its
+ *    well-known agent-skills endpoint (see well-known.ts). https only.
  * A bare `owner/repo` with no "@" at all is ambiguous — REJECTED with a message pointing at both
  * unambiguous forms — never silently guessed.
  */
 export function parseInstallRef(arg: string): InstallRef {
+  if (arg.startsWith("docs:")) {
+    // Checked before the bare owner/repo branch so a URL's "/" can't be mis-parsed as owner/repo.
+    const url = arg.slice("docs:".length);
+    let u: URL;
+    try {
+      u = new URL(url);
+    } catch {
+      throw new Error(`git-source: "${arg}" is not a valid docs URL — expected docs:https://host/...`);
+    }
+    if (u.protocol !== "https:") throw new Error(`git-source: "${arg}" must be https (got "${u.protocol.replace(/:$/, "")}")`);
+    if (!u.hostname) throw new Error(`git-source: "${arg}" has no host`);
+    return { kind: "docs", url };
+  }
   if (arg.startsWith("github:")) {
     const { name, ref } = parseGitInstallArg(arg);
     return { kind: "git", name, ref };
